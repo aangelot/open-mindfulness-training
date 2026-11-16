@@ -1,0 +1,28 @@
+import '@/core/i18n';
+
+import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
+import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
+
+import { DatabaseProvider } from '@/core/db/provider';
+import { colors, useTheme } from '@/core/theme';
+
+SplashScreen.preventAutoHideAsync();
+
+export default function RootLayout() {
+  const { scheme } = useTheme();
+  const base = scheme === 'dark' ? DarkTheme : DefaultTheme;
+  const navTheme = {
+    ...base,
+    colors: { ...base.colors, primary: colors[scheme].primary, background: colors[scheme].background },
+  };
+
+  return (
+    <ThemeProvider value={navTheme}>
+      <DatabaseProvider>
+        <Stack screenOptions={{ headerShown: false }} />
+      </DatabaseProvider>
+      <StatusBar style="auto" />
+    </ThemeProvider>
+  );
+}

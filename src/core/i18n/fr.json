@@ -1,0 +1,33 @@
+{
+  "tabs": {
+    "home": "Accueil",
+    "carnet": "Carnet",
+    "meditations": "Méditations",
+    "book": "Livre",
+    "profile": "Profil"
+  },
+  "home": {
+    "title": "Open Mindfulness",
+    "subtitle": "L’entraînement fondamental à la pleine présence en huit étapes"
+  },
+  "carnet": {
+    "title": "Carnet d’entraînement",
+    "week": "Semaine {{n}}",
+    "sittingMinutes": "Pratique assise type : {{min}} à {{max}} min",
+    "remindersCount": "{{count}} rappels"
+  },
+  "meditations": {
+    "title": "Méditations",
+    "comingSoon": "Catalogue des pratiques guidées et minuteur libre : à venir."
+  },
+  "book": {
+    "title": "Le livre",
+    "sections": "{{count}} sections",
+    "audio": "Audio"
+  },
+  "profile": {
+    "title": "Profil",
+    "noAccount": "Vos données restent sur cet appareil. Créez un compte pour les sauvegarder et les retrouver sur un autre appareil.",
+    "syncUnavailable": "Synchronisation non configurée pour ce build."
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "expo": {
+    "name": "Open Mindfulness",
+    "slug": "open-mindfulness-training",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "omt",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "net.openmindfulness.app",
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "net.openmindfulness.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#FFFFFF",
+        "foregroundImage": "./assets/images/android-icon-foreground.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFFFFF",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 180,
+          "dark": {
+            "backgroundColor": "#121417",
+            "image": "./assets/images/splash-icon.png"
+          }
+        }
+      ],
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": true
+        }
+      ],
+      "expo-sqlite",
+      "expo-secure-store",
+      "expo-localization",
+      [
+        "expo-font",
+        {
+          "android": {
+            "fonts": [
+              {
+                "fontFamily": "OpenSans",
+                "fontDefinitions": [
+                  {
+                    "path": "node_modules/@expo-google-fonts/open-sans/300Light/OpenSans_300Light.ttf",
+                    "weight": 300
+                  },
+                  {
+                    "path": "node_modules/@expo-google-fonts/open-sans/400Regular/OpenSans_400Regular.ttf",
+                    "weight": 400
+                  },
+                  {
+                    "path": "node_modules/@expo-google-fonts/open-sans/400Regular_Italic/OpenSans_400Regular_Italic.ttf",
+                    "weight": 400,
+                    "style": "italic"
+                  },
+                  {
+                    "path": "node_modules/@expo-google-fonts/open-sans/600SemiBold/OpenSans_600SemiBold.ttf",
+                    "weight": 600
+                  },
+                  {
+                    "path": "node_modules/@expo-google-fonts/open-sans/700Bold/OpenSans_700Bold.ttf",
+                    "weight": 700
+                  }
+                ]
+              }
+            ]
+          },
+          "ios": {
+            "fonts": [
+              "node_modules/@expo-google-fonts/open-sans/300Light/OpenSans_300Light.ttf",
+              "node_modules/@expo-google-fonts/open-sans/400Regular/OpenSans_400Regular.ttf",
+              "node_modules/@expo-google-fonts/open-sans/400Regular_Italic/OpenSans_400Regular_Italic.ttf",
+              "node_modules/@expo-google-fonts/open-sans/600SemiBold/OpenSans_600SemiBold.ttf",
+              "node_modules/@expo-google-fonts/open-sans/700Bold/OpenSans_700Bold.ttf"
+            ]
+          }
+        }
+      ],
+      "expo-asset"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}

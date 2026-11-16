@@ -47,3 +47,6 @@ example
 .env.*
 !.env.example
 *.keystore
+
+# IDE
+.idea/

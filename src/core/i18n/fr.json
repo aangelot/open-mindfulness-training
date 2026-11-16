@@ -23,11 +23,46 @@
   "book": {
     "title": "Le livre",
     "sections": "{{count}} sections",
-    "audio": "Audio"
+    "audio": "Audio",
+    "toc": "Sommaire",
+    "resume": "Reprendre la lecture",
+    "readCount": "{{read}} sections lues sur {{total}}",
+    "partProgress": "{{read}} / {{total}} lues",
+    "hasAudio": "Avec audio",
+    "read": "Lue",
+    "next": "Section suivante",
+    "previous": "Section précédente",
+    "notFound": "Section introuvable.",
+    "searchPlaceholder": "Rechercher dans le livre",
+    "clearSearch": "Effacer la recherche",
+    "noResults": "Aucune section ne contient « {{query}} ».",
+    "resultsCount_one": "{{count}} section",
+    "resultsCount_other": "{{count}} sections"
   },
   "profile": {
     "title": "Profil",
     "noAccount": "Vos données restent sur cet appareil. Créez un compte pour les sauvegarder et les retrouver sur un autre appareil.",
     "syncUnavailable": "Synchronisation non configurée pour ce build."
+  },
+  "audio": {
+    "play": "Lecture",
+    "pause": "Pause",
+    "back10": "Reculer de 10 secondes",
+    "forward10": "Avancer de 10 secondes",
+    "position": "Position de lecture"
+  },
+  "offlineAudio": {
+    "title": "Audios hors connexion",
+    "offer": "Téléchargez les {{count}} méditations guidées du livre pour les écouter sans connexion ({{size}}, Wi-Fi conseillé).",
+    "download": "Télécharger",
+    "later": "Plus tard",
+    "resume": "Reprendre",
+    "pause": "Mettre en pause",
+    "delete": "Supprimer",
+    "streaming": "Les audios sont lus en ligne. Téléchargez-les ({{count}} fichiers, {{size}}) pour les écouter sans connexion.",
+    "progress": "{{done}} audios sur {{total}} téléchargés ({{size}}).",
+    "complete": "Les {{count}} audios sont sur l’appareil ({{size}}).",
+    "errorNetwork": "Le téléchargement s’est interrompu. Vérifiez votre connexion, puis reprenez.",
+    "errorSpace": "Espace insuffisant sur l’appareil : il faut {{size}} de libre."
   }
 }

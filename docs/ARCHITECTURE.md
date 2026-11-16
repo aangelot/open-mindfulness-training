@@ -1,6 +1,6 @@
 # Architecture — Open Mindfulness Training (application mobile)
 
-> Mise à jour : 16 novembre 2026. Socle en place, les quatre volets restent à développer.
+> Mise à jour : 16 novembre 2026. Socle et volet Livre en place.
 
 ## 1. Objectifs et contraintes
 
@@ -106,6 +106,8 @@ Règles :
 ### 5.3 Livre
 - `npm run content:import` lit l'API REST WordPress (articles, catégories, page « Table des matières »), supprime les shortcodes WPBakery et produit des blocs structurés (titres, paragraphes avec gras/italique/liens, listes) + URL audio et PDF.
 - Résultat actuel : **148 sections, 13 parties, 136 audios**, environ 730 Ko.
+- Écrans : sommaire à parties dépliables (badges E/P, icône audio, coche « lue »), recherche plein texte (insensible aux accents, titres d'abord), lecture avec lecteur audio intégré et boutons section précédente / suivante.
+- Progression : table `book_progress` (une ligne par section ouverte, `read_at` posé quand on atteint la fin du texte). Elle alimente « Reprendre la lecture » (sommaire et accueil) et sera synchronisée comme les autres tables.
 - Particularités du site dont l'import tient compte :
   - Certains articles sont mal rangés : « 26.ETAPE 6-Pratique type » est dans la catégorie Étape 5, et la table des matières pointe vers lui pour les étapes 4 et 5.
   - La table des matières lie certaines pages deux fois sous deux titres différents. Ces titres-là sont ignorés.
@@ -129,7 +131,14 @@ Une table de plus, synchronisée comme les autres.
 
 ## 7. Audio
 - `AudioEngine` ([src/core/audio/types.ts](../src/core/audio/types.ts)) : `play(queue)`, `pause`, `resume`, `seekTo`, `stop`, `subscribe`.
-- Audios du livre en streaming, téléchargement optionnel pour le hors-ligne.
+- Lecteur d'une piste : [src/core/audio/player-bar.tsx](../src/core/audio/player-bar.tsx) (lecture/pause, ±10 s, barre de progression), réutilisé par le volet Méditations.
+
+### Pack audio hors connexion
+Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 30). Pour de la voix, c'est inutile :
+- `npm run audio:build` télécharge les originaux, les réencode en **AAC 48 kbps mono** (environ 6 fois plus léger) et écrit le manifeste `src/content/generated/audio.json` (fichier, taille, durée par URL d'origine).
+- Les fichiers sont publiés comme pièces jointes de la release GitHub `audio-vN` du dépôt (`npm run audio:build -- --upload`, nécessite `gh`). Changer les fichiers impose d'incrémenter la release : l'app supprime alors les fichiers de l'ancienne.
+- Dans l'app ([src/core/audio/offline.ts](../src/core/audio/offline.ts)) : rien n'est téléchargé sans accord. L'accueil propose le téléchargement, le Profil affiche la progression (pause, reprise, suppression). Un téléchargement interrompu reprend au lancement suivant ; chaque fichier est vérifié par sa taille.
+- Ordre de lecture d'un audio : copie locale, sinon version légère en streaming depuis la release, sinon (erreur) le fichier original du site.
 - Gongs embarqués dans `assets/sounds/`.
 - Android : service de premier plan + contrôles média (plugin `expo-audio`, `enableBackgroundPlayback`). Sans contrôles d'écran de verrouillage actifs, Android coupe l'audio après environ 3 min en arrière-plan.
 
@@ -143,7 +152,7 @@ Une table de plus, synchronisée comme les autres.
 | Phase | Contenu | État |
 |---|---|---|
 | 0 — Socle | Expo, thème, onglets, SQLite, i18n, CI, import du contenu | ✅ |
-| 1 | Livre (lecture, typographie, audio, liens E/P) | |
+| 1 | Livre (sommaire, lecture, recherche, progression, audio, pack hors connexion) | ✅ |
 | 2 | Méditations (catalogue, lecteur, minuteur libre, pratiques types) | |
 | 3 | Carnet (cycles, saisie quotidienne, rappels A–E) | |
 | 4 | Comptes + synchronisation (Supabase OVH) | |
@@ -158,3 +167,5 @@ Une table de plus, synchronisée comme les autres.
 | Backend | Supabase auto-hébergé sur OVH (compte à créer) |
 | Compte | Optionnel |
 | Google Play | Compte développeur à créer |
+| Audios hors connexion | Réencodage AAC 48 kbps mono, hébergé sur une release GitHub, téléchargé en entier après accord de l'utilisateur |
+| Livre v1 | Parties dépliables, lecteur dans la page, précédent/suivant, reprendre + sections lues, recherche plein texte. Pas de réglage de taille de texte pour l'instant |

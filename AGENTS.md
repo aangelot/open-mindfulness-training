@@ -45,6 +45,6 @@ Docs: https://docs.expo.dev/eas/index.md
 - Architecture and decisions: `docs/ARCHITECTURE.md`. Read it before structural changes.
 - UI language is French; all user-facing strings go in `src/core/i18n/fr.json`.
 - Features (`src/features/*`) may import from `src/core` and `src/ui`, never from each other.
-- `src/content/generated/` is produced by `npm run content:import`, never edit by hand.
+- `src/content/generated/` is produced by `npm run content:import` (book.json) and `npm run audio:build` (audio.json), never edit by hand. Bump `RELEASE` in scripts/audio-pack/build.ts when the encoded audio files change.
 - After editing `src/core/db/schema.ts`, run `npm run db:generate` and keep `supabase/migrations/` in sync.
 - Program data (`src/features/carnet/program.ts`): reminder `id`s are persisted, never rename them.

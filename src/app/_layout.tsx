@@ -3,7 +3,9 @@ import '@/core/i18n';
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 
+import { initOfflineAudio } from '@/core/audio/offline';
 import { DatabaseProvider } from '@/core/db/provider';
 import { colors, useTheme } from '@/core/theme';
 
@@ -11,6 +13,7 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const { scheme } = useTheme();
+  useEffect(initOfflineAudio, []);
   const base = scheme === 'dark' ? DarkTheme : DefaultTheme;
   const navTheme = {
     ...base,

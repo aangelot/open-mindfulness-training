@@ -27,6 +27,7 @@ Comptes et synchronisation (facultatif) : copier `.env.example` en `.env` et ren
 | `npm run lint` | ESLint |
 | `npm test` | Tests Jest |
 | `npm run content:import` | Réimporte le livre depuis le site → `src/content/generated/book.json` |
+| `npm run audio:build` | Réencode les audios du livre et écrit `src/content/generated/audio.json` (`-- --upload` : publie la release GitHub, nécessite `gh` et `ffmpeg`) |
 | `npm run db:generate` | Génère une migration SQLite après modification de `src/core/db/schema.ts` |
 
 ## Licences

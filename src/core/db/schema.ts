@@ -70,3 +70,16 @@ export const meditationSessions = sqliteTable('meditation_sessions', {
   startedAt: text('started_at').notNull(),
   durationSeconds: integer('duration_seconds').notNull(),
 });
+
+/** One row per book section the user opened. Drives "Reprendre la lecture" and read marks. */
+export const bookProgress = sqliteTable(
+  'book_progress',
+  {
+    ...syncColumns,
+    sectionId: text('section_id').notNull(),
+    openedAt: text('opened_at').notNull(),
+    /** Set once the user scrolled to the end of the section. */
+    readAt: text('read_at'),
+  },
+  (t) => [uniqueIndex('book_progress_section').on(t.sectionId)],
+);

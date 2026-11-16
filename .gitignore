@@ -50,3 +50,6 @@ example
 
 # IDE
 .idea/
+
+# audio pack work dir (scripts/audio-pack)
+.cache/

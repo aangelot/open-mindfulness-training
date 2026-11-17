@@ -7,6 +7,7 @@
  * the app was closed in between.
  */
 import { Directory, File, Paths } from 'expo-file-system';
+import { Platform } from 'react-native';
 import Storage from 'expo-sqlite/kv-store';
 import { create } from 'zustand';
 
@@ -17,13 +18,18 @@ import type { AudioManifest } from './manifest-types';
 export const audioManifest = manifestJson as AudioManifest;
 const tracks = Object.values(audioManifest.tracks);
 
-/** False until the audio pack has been built (empty manifest). */
-export const offlineAudioAvailable = tracks.length > 0;
+/** expo-file-system has no web implementation: on web, audios are always streamed. */
+const fileSystemSupported = Platform.OS !== 'web';
 
-const ROOT = new Directory(Paths.document, 'audio');
-const releaseDir = () => new Directory(ROOT, audioManifest.release);
+/** False until the audio pack has been built (empty manifest), and on web. */
+export const offlineAudioAvailable = fileSystemSupported && tracks.length > 0;
+
+// Built lazily: constructing a Directory throws where the file system is unsupported.
+const root = () => new Directory(Paths.document, 'audio');
+const releaseDir = () => new Directory(root(), audioManifest.release);
 const localFile = (file: string) => new File(releaseDir(), file);
 const isComplete = (t: { file: string; bytes: number }) => {
+  if (!fileSystemSupported) return false;
   const f = localFile(t.file);
   return f.exists && f.size === t.bytes;
 };
@@ -65,12 +71,15 @@ function refresh() {
 
 /** Call once at startup: restores the user's choice and resumes an interrupted download. */
 export function initOfflineAudio() {
+  // Web: nothing to restore (no offline copies), and the kv-store would make a sync SQLite call at startup.
+  if (!fileSystemSupported) return;
   const choice = Storage.getItemSync(CHOICE_KEY) as OfflineChoice;
   set({ choice });
   if (!offlineAudioAvailable) return;
   // Files of a previous release are useless once the manifest moved on.
-  if (ROOT.exists) {
-    for (const item of ROOT.list()) if (item.name !== audioManifest.release) item.delete();
+  const dir = root();
+  if (dir.exists) {
+    for (const item of dir.list()) if (item.name !== audioManifest.release) item.delete();
   }
   refresh();
   if (choice === 'accepted' && useOfflineAudio.getState().doneCount < tracks.length) void downloadOfflineAudio();
@@ -121,7 +130,7 @@ export function declineOfflineAudio() {
 
 export function deleteOfflineAudio() {
   cancelRequested = true;
-  if (ROOT.exists) ROOT.delete();
+  if (fileSystemSupported && root().exists) root().delete();
   setChoice('declined');
   set({ error: null });
   refresh();

@@ -6,7 +6,7 @@ import { radius, spacing, useTheme } from '@/core/theme';
 import { BackLink, Button, Card, Icon, ProgressBar, Screen, Text } from '@/ui';
 
 import { confirmStartCycle } from '../actions';
-import { TOTAL_DAYS, cycleNumbers, filledDays } from '../cycle';
+import { TOTAL_DAYS, cycleNumbers, filledDays } from '@/core/cycle';
 import { formatDate, isoToLocalDate, openCycle } from '../format';
 import { useCycleDays, useCycles, type Cycle } from '../store';
 

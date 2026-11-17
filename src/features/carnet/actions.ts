@@ -3,7 +3,7 @@ import { Alert } from 'react-native';
 
 import { i18n } from '@/core/i18n';
 
-import { TOTAL_DAYS, currentDayIndex, localDate } from './cycle';
+import { TOTAL_DAYS, currentDayIndex, localDate } from '@/core/cycle';
 import { deleteCycle, endCycle, resumeCycle, startCycle, type DailyReport } from './store';
 
 const t = i18n.t.bind(i18n);

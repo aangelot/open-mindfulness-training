@@ -5,7 +5,6 @@ import { spacing, useTheme } from '@/core/theme';
 import { Card, Icon, Text } from '@/ui';
 
 import { getSection } from '@/core/book/content';
-import { useBookProgress } from '../progress';
 import { openSection } from './toc';
 
 /** "Reprendre la lecture" on the last opened section. */
@@ -30,12 +29,6 @@ export function ResumeCard({ sectionId }: { sectionId: string }) {
       </View>
     </Card>
   );
-}
-
-/** Resume card for screens outside the book (home): renders nothing before the first reading. */
-export function ResumeReading() {
-  const { lastOpenedId } = useBookProgress();
-  return lastOpenedId ? <ResumeCard sectionId={lastOpenedId} /> : null;
 }
 
 const styles = StyleSheet.create({

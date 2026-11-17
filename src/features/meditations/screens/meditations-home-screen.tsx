@@ -1,13 +1,15 @@
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
+import { currentWeek, localDate } from '@/core/cycle';
+import { useActiveCycle } from '@/core/cycle-store';
 import { spacing, useTheme } from '@/core/theme';
 import { Button, Card, Icon, Screen, Text } from '@/ui';
 
 import { catalogCount } from '../catalog';
 import { CurrentSessionCard } from '../components/current-session-card';
 import { formatDuration, openAddSession, openCatalog, openHistory, openSitting, openTimer, sittingTitle, thisWeek } from '../format';
-import { SITTING_SESSIONS } from '../sitting-sessions';
+import { SITTING_SESSIONS, type SittingSessionDef } from '../sitting-sessions';
 import { useSessions } from '../store';
 
 export function MeditationsHomeScreen() {
@@ -15,10 +17,26 @@ export function MeditationsHomeScreen() {
   const { colors } = useTheme();
   const { sessions } = useSessions();
   const week = thisWeek(sessions);
+  const { active } = useActiveCycle();
+  const yourWeek = active ? { cycle: active.number, week: currentWeek(active.days, localDate()) } : null;
 
   return (
     <Screen title={t('meditations.title')} subtitle={t('meditations.subtitle')}>
       <CurrentSessionCard />
+
+      {yourWeek ? (
+        <>
+          <View style={styles.section}>
+            <Text variant="subtitle" color="heading">
+              {t('meditations.yourWeek.title')}
+            </Text>
+            <Text color="textMuted">{t('meditations.yourWeek.intro', { cycle: yourWeek.cycle, week: yourWeek.week })}</Text>
+          </View>
+          {SITTING_SESSIONS.filter((def) => def.week === yourWeek.week).map((def) => (
+            <SittingCard key={def.id} def={def} />
+          ))}
+        </>
+      ) : null}
 
       <View style={styles.section}>
         <Text variant="subtitle" color="heading">
@@ -27,17 +45,7 @@ export function MeditationsHomeScreen() {
         <Text color="textMuted">{t('meditations.sitting.intro')}</Text>
       </View>
       {SITTING_SESSIONS.map((def) => (
-        <Card key={def.id} onPress={() => openSitting(def.id)}>
-          <View style={styles.row}>
-            <View style={styles.grow}>
-              <Text>{sittingTitle(def)}</Text>
-              <Text variant="small" color="textMuted">
-                {t('meditations.sitting.durations')}
-              </Text>
-            </View>
-            <Icon name="chevron_right" ios="chevron.right" size={20} color={colors.textMuted} />
-          </View>
-        </Card>
+        <SittingCard key={def.id} def={def} current={def.week === yourWeek?.week} />
       ))}
 
       <Card onPress={openTimer}>
@@ -81,6 +89,24 @@ export function MeditationsHomeScreen() {
         <Button label={t('meditations.history.seeAll')} variant="secondary" onPress={openHistory} />
       </View>
     </Screen>
+  );
+}
+
+function SittingCard({ def, current }: { def: SittingSessionDef; current?: boolean }) {
+  const { t } = useTranslation();
+  const { colors } = useTheme();
+  return (
+    <Card onPress={() => openSitting(def.id)}>
+      <View style={styles.row}>
+        <View style={styles.grow}>
+          <Text>{sittingTitle(def)}</Text>
+          <Text variant="small" color="textMuted">
+            {current ? `${t('meditations.sitting.durations')} · ${t('meditations.yourWeek.badge')}` : t('meditations.sitting.durations')}
+          </Text>
+        </View>
+        <Icon name="chevron_right" ios="chevron.right" size={20} color={colors.textMuted} />
+      </View>
+    </Card>
   );
 }
 

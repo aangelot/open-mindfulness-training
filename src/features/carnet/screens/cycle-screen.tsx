@@ -2,13 +2,15 @@ import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet, View } from 'react-native';
 
+import { openWeekPractice } from '@/core/links';
 import { fontFamily, spacing, useTheme } from '@/core/theme';
 import { BackLink, Button, Card, Icon, Screen, Text } from '@/ui';
 
 import { confirmAbandon, confirmDelete, confirmResume, confirmStartCycle } from '../actions';
+import { FoundationsAdvice, ReadStepLink } from '../components/reading-links';
 import { SittingPractice } from '../components/sitting-practice';
 import { TodayCard } from '../components/today-card';
-import { TOTAL_DAYS, currentWeek, cycleNumbers, daysOfWeek, filledDays, localDate } from '../cycle';
+import { TOTAL_DAYS, currentWeek, cycleNumbers, daysOfWeek, filledDays, localDate } from '@/core/cycle';
 import { formatDate, isoToLocalDate, openCycles, openWeek } from '../format';
 import { PROGRAM, type ProgramWeek } from '@/core/program';
 import { useCycleDays, useCycles, type Cycle, type DailyReport } from '../store';
@@ -25,6 +27,7 @@ export function CarnetHomeScreen() {
     <Screen title={t('carnet.title')}>
       <Text>{t('carnet.intro')}</Text>
       <Text color="textMuted">{t('carnet.introCycles')}</Text>
+      <FoundationsAdvice />
       <Button label={t('carnet.start')} icon="play_arrow" iosIcon="play.fill" onPress={() => confirmStartCycle(null)} />
       {cycles.length > 0 ? <HistoryLink /> : null}
       <Text variant="label" color="textMuted" style={styles.sectionTitle}>
@@ -131,7 +134,16 @@ function CurrentWeekCard({ week }: { week: ProgramWeek }) {
         {`${t('carnet.week', { n: week.week })} · ${t('carnet.sitting')}`.toUpperCase()}
       </Text>
       <Text variant="subtitle">{week.title}</Text>
-      <SittingPractice week={week} />
+      <View style={styles.weekBody}>
+        <ReadStepLink week={week.week} />
+        <SittingPractice week={week} />
+        <Button
+          label={t('journey.week.practiceGuided')}
+          icon="self_improvement"
+          iosIcon="figure.mind.and.body"
+          onPress={() => openWeekPractice(week.week)}
+        />
+      </View>
     </Card>
   );
 }
@@ -174,4 +186,5 @@ const styles = StyleSheet.create({
   grow: { flex: 1, gap: 2 },
   weekTitle: { fontFamily: fontFamily(600), fontWeight: '600' },
   actions: { gap: spacing.sm, marginTop: spacing.md },
+  weekBody: { gap: spacing.md, marginTop: spacing.xs },
 });

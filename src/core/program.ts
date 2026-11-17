@@ -56,6 +56,19 @@ export const SESSION_CONCLUSION = {
     'Clôture de la session dans un état d’esprit positif de réjouissance, de satisfaction et de dédicace altruiste',
 } as const;
 
+/**
+ * The guided "pratiques types" of a week in Méditations (week 5 has two: thoughts, then
+ * emotions), so other screens can link to them. Persisted ids: never rename.
+ * sitting-sessions.test.ts checks they match the Méditations definitions.
+ */
+export const weekSittingSessions = (week: number): { id: string; group?: 'pensees' | 'emotions' }[] =>
+  week === 5
+    ? [
+        { id: 'etape-5-pensees', group: 'pensees' },
+        { id: 'etape-5-emotions', group: 'emotions' },
+      ]
+    : [{ id: `etape-${week}` }];
+
 /** Recommended minimum number of sitting sessions per week. */
 export const RECOMMENDED_DAYS_PER_WEEK = 6;
 

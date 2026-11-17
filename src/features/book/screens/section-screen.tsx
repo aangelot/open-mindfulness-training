@@ -4,12 +4,14 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 
 import { AudioPlayerBar } from '@/core/audio/player-bar';
+import { openSittingSession } from '@/core/links';
+import { weekSittingSessions } from '@/core/program';
 import { spacing, useTheme } from '@/core/theme';
-import { BackLink, Card, Icon, Screen, Text } from '@/ui';
+import { BackLink, Button, Card, Icon, Screen, Text } from '@/ui';
 
 import { SectionView } from '../components/section-view';
 import { getNeighbors, getSection, refLabel, type SectionEntry } from '@/core/book/content';
-import { markOpened, markRead } from '../progress';
+import { markOpened, markRead } from '@/core/book/progress';
 
 /** Distance from the bottom (px) at which the section counts as read. */
 const READ_THRESHOLD = 120;
@@ -74,6 +76,7 @@ export function SectionScreen({ id, embedded = false }: { id: string; embedded?:
       }}>
       {section.audioUrl ? <AudioPlayerBar key={section.id} url={section.audioUrl} title={section.title} /> : null}
       <SectionView section={section} />
+      {section.kind === 'pratique-type' && part.step !== null ? <GuidedPractice step={part.step} /> : null}
       {embedded ? null : (
         <View style={styles.nav}>
           {next ? <NeighborCard entry={next} label={t('book.next')} direction="next" /> : null}
@@ -101,6 +104,29 @@ function NeighborCard({ entry, label, direction }: { entry: SectionEntry; label:
         </View>
         {direction === 'next' ? icon : null}
       </View>
+    </Card>
+  );
+}
+
+/** End of a step's "pratique type": play it, guided, in Méditations. */
+function GuidedPractice({ step }: { step: number }) {
+  const { t } = useTranslation();
+  const sessions = weekSittingSessions(step);
+  return (
+    <Card>
+      <Text variant="label" color="primary">
+        {t('book.guided.title').toUpperCase()}
+      </Text>
+      <Text color="textMuted">{t('book.guided.body')}</Text>
+      {sessions.map(({ id, group }) => (
+        <Button
+          key={id}
+          label={group ? t(`meditations.sitting.groups.${group}`) : t('book.guided.start')}
+          icon="self_improvement"
+          iosIcon="figure.mind.and.body"
+          onPress={() => openSittingSession(id)}
+        />
+      ))}
     </Card>
   );
 }

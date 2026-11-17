@@ -5,9 +5,9 @@ import { spacing } from '@/core/theme';
 import { Button, Card, ProgressBar, Text } from '@/ui';
 
 import { completeCycle } from '../actions';
-import { TOTAL_DAYS, currentDayIndex, cycleNumbers, dayInWeek, filledDays, localDate, programWeek, weekOf } from '../cycle';
+import { TOTAL_DAYS, currentDayIndex, dayInWeek, filledDays, localDate, programWeek, weekOf } from '@/core/cycle';
 import { openDay } from '../format';
-import { useCycleDays, useCycles, type Cycle } from '../store';
+import { useCycleDays, type Cycle } from '../store';
 
 /** Where the active cycle stands today, with the button to fill the day. */
 export function TodayCard({ cycle, number, showCycle }: { cycle: Cycle; number: number; showCycle?: boolean }) {
@@ -48,14 +48,6 @@ export function TodayCard({ cycle, number, showCycle }: { cycle: Cycle; number: 
       )}
     </Card>
   );
-}
-
-/** Home screen entry: the active cycle's day, or nothing when no cycle runs. */
-export function ActiveCycleToday() {
-  const { cycles } = useCycles();
-  const active = cycles.find((c) => c.status === 'active');
-  if (!active) return null;
-  return <TodayCard cycle={active} number={cycleNumbers(cycles).get(active.id) ?? 1} showCycle />;
 }
 
 const styles = StyleSheet.create({

@@ -7,3 +7,4 @@ export * from './progress-bar';
 export * from './screen';
 export * from './text';
 export * from './text-field';
+export * from './step-row';

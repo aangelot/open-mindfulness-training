@@ -1,6 +1,6 @@
 # Architecture — Open Mindfulness Training (application mobile)
 
-> Mise à jour : 17 novembre 2026. Socle, volets Livre, Carnet et Méditations en place.
+> Mise à jour : 17 novembre 2026. Socle, volets Livre, Carnet et Méditations en place, parcours guidé sur l’accueil.
 
 ## 1. Objectifs et contraintes
 
@@ -67,8 +67,11 @@ OMT_app/
 │   │       └── profil.tsx
 │   ├── core/
 │   │   ├── audio/                  # session.ts (moteur de séance), timeline.ts, sounds.ts, offline.ts (pack hors connexion), player-bar.tsx
-│   │   ├── book/                   # Accès au contenu du livre (book.json) et ses types, partagés par les volets
+│   │   ├── book/                   # Contenu du livre (book.json), groupes de lecture, progression (book_progress), partagés par les volets
 │   │   ├── program.ts              # Les 8 semaines en données (pratiques assises, rappels, E8), partagé Carnet / Méditations
+│   │   ├── cycle.ts                # Calculs purs des cycles (jour, semaine en cours)
+│   │   ├── cycle-store.ts          # Lecture des cycles (SQLite), dont le cycle en cours : Carnet, accueil, Méditations
+│   │   ├── links.ts                # Liens vers la pile d’un autre onglet (section du livre, jour du carnet, pratique type)
 │   │   ├── db/                     # schema.ts, client.ts, provider.tsx
 │   │   ├── supabase/client.ts      # null si non configuré
 │   │   ├── theme/                  # Tokens de la charte + useTheme
@@ -77,9 +80,10 @@ OMT_app/
 │   │   ├── carnet/                 # cycle.ts (calculs purs), store.ts (SQLite), écrans
 │   │   ├── book/                   # recherche, rendu, progression
 │   │   ├── meditations/            # sitting-sessions.ts (pratiques types), timer.ts, catalog.ts, play.ts, store.ts, écrans
+│   │   ├── journey/                # Parcours guidé de l’accueil (« Par où commencer ? », « Cette semaine »)
 │   │   └── dreams/                 # (v2)
 │   ├── content/generated/book.json # Produit par l'import : ne pas éditer à la main
-│   └── ui/                         # Text, Screen, Card…
+│   └── ui/                         # Text, Screen, Card, StepRow…
 ├── drizzle/                        # Migrations SQLite générées (npm run db:generate)
 ├── supabase/migrations/            # Schéma serveur + RLS
 ├── scripts/content-import/         # Import WordPress → JSON (+ tests)
@@ -122,7 +126,19 @@ Règles :
   - La table des matières lie certaines pages deux fois sous deux titres différents. Ces titres-là sont ignorés.
   - Le titre d'une section vient, dans l'ordre : d'un titre généré (pratique type, intro d'étape), de la table des matières, du premier sous-titre de la page, du titre WordPress.
 
-### 5.4 Journal de rêves (v2)
+### 5.4 Parcours guidé
+Le livre se lit en trois temps, que l’app met en avant sans changer les onglets :
+1. **Découvrir** : introduction, chapitres 1 et 2 (12 sections, `foundationSections`).
+2. **S’entraîner huit semaines** : une étape du chapitre 3 par semaine (`stepSections(n)`). Chaque semaine : lire l’étape, pratiquer chaque jour, noter dans le carnet.
+3. **Continuer** : chapitre 4 et conclusion (`furtherSections`), puis un nouveau cycle.
+
+- **Accueil** ([features/journey](../src/features/journey)) : sans cycle en cours, la carte « Par où commencer ? » (les trois temps, l’avancement de la lecture, le temps à faire maintenant). Pendant un cycle, « Cette semaine » : lire l’étape *n* (sections lues, lien vers la première non lue), pratiquer (cochée dès qu’une séance de méditation est enregistrée aujourd’hui), noter le jour du carnet (cochée quand le jour est commencé).
+- **Carnet** : sans cycle, un conseil (non bloquant) de lire d’abord l’introduction et les chapitres 1 et 2, masqué une fois lus. Carte de la semaine : « Lire l’étape *n* dans le livre » et « Pratiquer avec l’audio guidé ».
+- **Méditations** : pendant un cycle, « Votre semaine » en tête avec la ou les pratiques types de l’étape en cours.
+- **Livre** : à la fin de chaque « Pratique type pour l’étape *n* », un lien vers la pratique guidée correspondante.
+- Les liens d’un volet à l’autre passent par le routeur ([core/links.ts](../src/core/links.ts)) ; les identifiants des pratiques types d’une semaine sont dans `weekSittingSessions` (program.ts), vérifiés par un test.
+
+### 5.5 Journal de rêves (v2)
 Une table de plus, synchronisée comme les autres.
 
 ## 6. Données et synchronisation
@@ -182,4 +198,5 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Audios hors connexion | Réencodage AAC 48 kbps mono, hébergé sur une release GitHub, téléchargé en entier après accord de l'utilisateur |
 | Livre v1 | Parties dépliables, lecteur dans la page, précédent/suivant, reprendre + sections lues, recherche plein texte. Pas de réglage de taille de texte pour l'instant |
 | Carnet v1 | Avancement jour par jour (pas calendaire), un seul cycle en cours, obstacles/remèdes E8 en puces + texte libre, écran « Aujourd'hui » + synthèse par semaine |
+| Parcours guidé | Pas d’écran d’introduction au premier lancement : l’accueil s’adapte (« Par où commencer ? » puis « Cette semaine »). Lire les chapitres 1–2 est conseillé, jamais imposé. « Lire l’étape » compte toutes les sections de l’étape |
 | Méditations v1 | Pratiques types **assemblées** à partir des audios du livre (voix des auteurs, pas de voix de synthèse), en 20/30/40 min ; étape 5 en deux séances (pensées, émotions) ; minuteur libre ; séances enregistrées et ajout manuel, **indépendants du carnet** |

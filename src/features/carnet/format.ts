@@ -1,6 +1,6 @@
 import { router } from 'expo-router';
 
-import { localDate, parseLocalDate } from './cycle';
+import { localDate, parseLocalDate } from '@/core/cycle';
 
 /** "2026-11-03" → "3 novembre 2026". */
 export const formatDate = (date: string) =>

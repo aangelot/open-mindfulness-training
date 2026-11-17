@@ -2,19 +2,17 @@
  * Carnet storage: cycles, daily reports, reminder ratings and weekly notes in SQLite.
  * Every write sets `dirty` and `updated_at` so the future sync pushes it; deletions are soft.
  */
-import { and, asc, eq, isNull } from 'drizzle-orm';
+import { and, eq, isNull } from 'drizzle-orm';
 import { useLiveQuery } from 'drizzle-orm/expo-sqlite';
 import { randomUUID } from 'expo-crypto';
 import { useMemo } from 'react';
 
 import { db } from '@/core/db/client';
 import { dailyReports, reminderNotes, reminderRatings, trainingCycles, type CycleStatus } from '@/core/db/schema';
-
-import { localDate } from './cycle';
+import { localDate } from '@/core/cycle';
+import type { DailyReport } from '@/core/cycle-store';
 import type { ReminderRating } from '@/core/program';
 
-export type Cycle = typeof trainingCycles.$inferSelect;
-export type DailyReport = typeof dailyReports.$inferSelect;
 export type ReportPatch = Partial<
   Pick<DailyReport, 'practiceMinutes' | 'positives' | 'obstacles' | 'remedies' | 'obstacleIds' | 'remedyIds'>
 >;
@@ -24,27 +22,7 @@ const touched = () => ({ updatedAt: now(), dirty: true, deletedAt: null });
 
 // --- Reads ------------------------------------------------------------------
 
-// `loaded` is false until the first query returns: forms must wait for it before
-// seeding their local state, or they would start empty and overwrite the saved text.
-
-export function useCycles(): { cycles: Cycle[]; loaded: boolean } {
-  const { data, updatedAt } = useLiveQuery(
-    db.select().from(trainingCycles).where(isNull(trainingCycles.deletedAt)).orderBy(asc(trainingCycles.startDate)),
-  );
-  return { cycles: data, loaded: updatedAt !== undefined };
-}
-
-export function useCycleDays(cycleId: string): { days: DailyReport[]; loaded: boolean } {
-  const { data, updatedAt } = useLiveQuery(
-    db
-      .select()
-      .from(dailyReports)
-      .where(and(eq(dailyReports.cycleId, cycleId), isNull(dailyReports.deletedAt)))
-      .orderBy(asc(dailyReports.dayIndex)),
-    [cycleId],
-  );
-  return { days: data, loaded: updatedAt !== undefined };
-}
+export { useCycleDays, useCycles, type Cycle, type DailyReport } from '@/core/cycle-store';
 
 /** Ratings of a cycle, keyed `${dayIndex}:${reminderId}`. */
 export function useCycleRatings(cycleId: string): ReadonlyMap<string, ReminderRating> {

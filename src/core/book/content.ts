@@ -38,3 +38,30 @@ export function refLabel(ref: string): string {
   const n = ref.slice(1);
   return ref.startsWith('P') ? `Pratique ${n}` : `Exposé ${n}`;
 }
+
+/** What to read before the eight weeks: the introduction and chapters 1 and 2. */
+export const foundationSections = readingOrder.filter((e) => e.part.chapter <= 2);
+
+/** Step n of chapter 3 (the step read during week n of a cycle). */
+export const stepSections = (step: number) => readingOrder.filter((e) => e.part.step === step);
+
+/** After the eight weeks: chapter 4 and the conclusion. */
+export const furtherSections = readingOrder.filter((e) => e.part.chapter >= 4);
+
+export interface ReadingStatus {
+  read: number;
+  total: number;
+  done: boolean;
+  /** First unread section, or the first section once everything is read. */
+  next: SectionEntry;
+}
+
+export function readingStatus(entries: readonly SectionEntry[], readIds: ReadonlySet<string>): ReadingStatus {
+  const read = entries.filter((e) => readIds.has(e.section.id)).length;
+  return {
+    read,
+    total: entries.length,
+    done: read === entries.length,
+    next: entries.find((e) => !readIds.has(e.section.id)) ?? entries[0],
+  };
+}

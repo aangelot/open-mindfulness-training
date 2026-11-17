@@ -9,7 +9,7 @@ import { ResumeCard } from '../components/resume-card';
 import { SearchField, SearchResults } from '../components/search';
 import { Toc } from '../components/toc';
 import { readingOrder } from '@/core/book/content';
-import { useBookProgress } from '../progress';
+import { useBookProgress } from '@/core/book/progress';
 
 const MIN_QUERY = 2;
 

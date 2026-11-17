@@ -8,7 +8,7 @@ import { BackLink, Card, Chip, Icon, Screen, Text, TextField } from '@/ui';
 import { AutosaveField } from '../components/autosave-field';
 import { RatingPicker } from '../components/rating-picker';
 import { RefLink, SittingPractice } from '../components/sitting-practice';
-import { TOTAL_DAYS, currentDayIndex, dayInWeek, localDate, programWeek, weekOf } from '../cycle';
+import { TOTAL_DAYS, currentDayIndex, dayInWeek, localDate, programWeek, weekOf } from '@/core/cycle';
 import { formatDate } from '../format';
 import { OBSTACLES, OBSTACLES_REF, REMEDIES, type ReminderCategory } from '@/core/program';
 import { ratingKey, saveDay, setRating, useCycleDays, useCycleRatings, useCycles } from '../store';

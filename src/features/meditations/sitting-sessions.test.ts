@@ -1,4 +1,4 @@
-import { PROGRAM } from '@/core/program';
+import { PROGRAM, weekSittingSessions } from '@/core/program';
 
 import { practiceClips } from './practice-audio';
 import { SITTING_SESSIONS, TARGET_MINUTES, composeSitting, sittingPlan } from './sitting-sessions';
@@ -9,6 +9,13 @@ describe('sitting sessions', () => {
   it('cover the eight weeks, week 5 twice', () => {
     expect(SITTING_SESSIONS.map((s) => s.week)).toEqual([1, 2, 3, 4, 5, 5, 6, 7, 8]);
     expect(new Set(SITTING_SESSIONS.map((s) => s.id)).size).toBe(SITTING_SESSIONS.length);
+  });
+
+  it('match the ids other screens link to', () => {
+    for (const week of PROGRAM.map((w) => w.week)) {
+      const defs = SITTING_SESSIONS.filter((s) => s.week === week).map(({ id, group }) => (group ? { id, group } : { id }));
+      expect(defs).toEqual(weekSittingSessions(week));
+    }
   });
 
   it('only use practices of their week', () => {

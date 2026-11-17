@@ -8,7 +8,10 @@
   },
   "home": {
     "title": "Open Mindfulness",
-    "subtitle": "L’entraînement fondamental à la pleine présence en huit étapes"
+    "subtitle": "L’entraînement fondamental à la pleine présence en huit étapes",
+    "bookHint": "Le livre complet : exposés, pratiques et leurs audios",
+    "meditationsHint": "Pratiques types guidées, audios du livre et minuteur",
+    "carnetHint": "Votre pratique jour après jour pendant les huit semaines"
   },
   "carnet": {
     "title": "Carnet d’entraînement",
@@ -212,6 +215,11 @@
       "invalidTime": "Heure invalide : utilisez le format 07:30.",
       "invalidDuration": "Indiquez une durée entre 1 et {{max}} minutes.",
       "future": "Cette séance commence dans le futur."
+    },
+    "yourWeek": {
+      "title": "Votre semaine",
+      "intro": "Cycle {{cycle}}, semaine {{week}} : la pratique type de l’étape en cours.",
+      "badge": "votre semaine"
     }
   },
   "book": {
@@ -231,7 +239,12 @@
     "clearSearch": "Effacer la recherche",
     "noResults": "Aucune section ne contient « {{query}} ».",
     "resultsCount_one": "{{count}} section",
-    "resultsCount_other": "{{count}} sections"
+    "resultsCount_other": "{{count}} sections",
+    "guided": {
+      "title": "Pratiquer cette étape",
+      "body": "Faites cette pratique type guidée par les audios du livre, en 20, 30 ou 40 minutes.",
+      "start": "Pratiquer avec l’audio guidé"
+    }
   },
   "profile": {
     "title": "Profil",
@@ -263,5 +276,45 @@
     "back": "Retour",
     "cancel": "Annuler",
     "delete": "Supprimer"
+  },
+  "journey": {
+    "sectionsRead": "{{read}} sur {{total}} sections lues",
+    "start": {
+      "label": "Par où commencer ?",
+      "labelPath": "Votre parcours",
+      "intro": "L’entraînement à la pleine présence se fait en trois temps. Le livre explique, les méditations font pratiquer, le carnet garde la trace de votre expérience.",
+      "discover": "Découvrir la pleine présence",
+      "discoverBody": "Lisez l’introduction et les chapitres 1 et 2 : ils présentent la pleine présence, ses trois dimensions et la méthode d’entraînement.",
+      "train": "S’entraîner pendant huit semaines",
+      "trainBody": "Le chapitre 3 propose huit étapes, une par semaine. Chaque semaine, lisez l’étape, faites chaque jour sa pratique type et notez votre expérience dans le carnet.",
+      "continue": "Continuer dans toute la vie",
+      "continueBody": "Le chapitre 4 et la conclusion prolongent l’entraînement. Vous pouvez refaire un cycle quand vous le souhaitez.",
+      "cyclesDone_one": "{{count}} cycle de huit semaines terminé.",
+      "cyclesDone_other": "{{count}} cycles de huit semaines terminés.",
+      "startReading": "Commencer la lecture",
+      "continueReading": "Continuer la lecture",
+      "startCycle": "Commencer les huit semaines",
+      "newCycle": "Commencer un nouveau cycle",
+      "skip": "Vous connaissez déjà la méthode ? Commencez directement un cycle."
+    },
+    "week": {
+      "label": "Cycle {{cycle}} · Semaine {{week}}",
+      "days_one": "{{count}} jour rempli sur {{total}}",
+      "days_other": "{{count}} jours remplis sur {{total}}",
+      "read": "Lire l’étape {{n}}",
+      "readInBook": "Lire l’étape {{n}} dans le livre",
+      "practice": "Pratiquer",
+      "practiceHint": "La pratique type de l’étape, guidée, en 20, 30 ou 40 min",
+      "practicedToday": "{{minutes}} min de pratique aujourd’hui",
+      "practiceGuided": "Pratiquer avec l’audio guidé",
+      "note": "Noter dans le carnet",
+      "noteHint": "Remplir le jour {{n}}",
+      "notedToday": "Jour {{n}} commencé aujourd’hui",
+      "allFilled": "Les 56 jours sont remplis : terminez le cycle dans le carnet."
+    },
+    "foundations": {
+      "title": "Avant de commencer",
+      "body": "Nous vous conseillons de lire d’abord l’introduction et les chapitres 1 et 2 du livre : ils présentent la pleine présence et la méthode que le carnet met en pratique."
+    }
   }
 }

@@ -76,6 +76,35 @@ export const DAILY_REPORT_FIELDS = [
   { key: 'remedies', label: 'Remède appliqué' },
 ] as const;
 
+/**
+ * The six obstacles and nine remedies of E8 ("Les obstacles à l'entraînement et leurs remèdes").
+ * Ids are stored in daily reports: never rename them.
+ */
+export const OBSTACLES = [
+  { id: 'paresse', label: 'Paresse' },
+  { id: 'oubli', label: 'Oubli' },
+  { id: 'agitation', label: 'Agitation' },
+  { id: 'torpeur', label: 'Torpeur' },
+  { id: 'manque-intervention', label: 'Manque d’intervention' },
+  { id: 'exces-intervention', label: 'Excès d’intervention' },
+] as const;
+export type ObstacleId = (typeof OBSTACLES)[number]['id'];
+
+export const REMEDIES: readonly { id: string; label: string; obstacle: ObstacleId }[] = [
+  { id: 'motivation', label: 'Motivation', obstacle: 'paresse' },
+  { id: 'effort', label: 'Effort', obstacle: 'paresse' },
+  { id: 'confiance', label: 'Confiance', obstacle: 'paresse' },
+  { id: 'bonnes-experiences', label: 'Bonnes expériences', obstacle: 'paresse' },
+  { id: 'rappel', label: 'Rappel', obstacle: 'oubli' },
+  { id: 'detente', label: 'Détente', obstacle: 'agitation' },
+  { id: 'stimulation', label: 'Stimulation', obstacle: 'torpeur' },
+  { id: 'intervention', label: 'Intervention appropriée', obstacle: 'manque-intervention' },
+  { id: 'non-intervention', label: 'Non-intervention', obstacle: 'exces-intervention' },
+];
+
+/** Book section on obstacles and remedies. */
+export const OBSTACLES_REF = 'E8';
+
 // --- Shared reminders -------------------------------------------------------
 
 const r = (id: string, category: ReminderCategory, label: string): Reminder => ({

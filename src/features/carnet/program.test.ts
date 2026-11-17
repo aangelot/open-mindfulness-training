@@ -1,4 +1,6 @@
-import { PROGRAM } from './program';
+import book from '@/content/generated/book.json';
+
+import { OBSTACLES, OBSTACLES_REF, PROGRAM, REMEDIES, SESSION_INTRO } from './program';
 
 describe('8-week program', () => {
   it('has the 8 weeks in order', () => {
@@ -27,5 +29,18 @@ describe('8-week program', () => {
         for (const ref of step.refs) expect(Number(ref.slice(1))).toBeGreaterThanOrEqual(5);
       }
     }
+  });
+
+  it('links only to sections that exist in the book', () => {
+    const refs = new Set(book.parts.flatMap((p) => p.sections.map((s) => s.ref)));
+    const wanted = [SESSION_INTRO.ref, OBSTACLES_REF, ...PROGRAM.flatMap((w) => w.sitting.steps.flatMap((s) => s.refs))];
+    expect(wanted.filter((r) => !refs.has(r))).toEqual([]);
+  });
+
+  it('maps every remedy to one of the six obstacles (E8)', () => {
+    expect(OBSTACLES).toHaveLength(6);
+    expect(REMEDIES).toHaveLength(9);
+    const ids = new Set<string>(OBSTACLES.map((o) => o.id));
+    for (const r of REMEDIES) expect(ids.has(r.obstacle)).toBe(true);
   });
 });

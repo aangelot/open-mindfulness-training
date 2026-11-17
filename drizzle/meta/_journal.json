@@ -15,6 +15,20 @@
       "when": 1794827150903,
       "tag": "0001_dusty_tusk",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1794906814276,
+      "tag": "0002_daily_black_tom",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1794908237300,
+      "tag": "0003_nasty_maestro",
+      "breakpoints": true
     }
   ]
 }

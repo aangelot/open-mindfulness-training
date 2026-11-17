@@ -18,10 +18,19 @@ const syncColumns = {
   dirty: integer('dirty', { mode: 'boolean' }).notNull().default(true),
 };
 
+export const CYCLE_STATUSES = ['active', 'completed', 'abandoned'] as const;
+export type CycleStatus = (typeof CYCLE_STATUSES)[number];
+
+/** An 8-week cycle. At most one is `active`; the others stay readable. */
 export const trainingCycles = sqliteTable('training_cycles', {
   ...syncColumns,
   programVersion: text('program_version').notNull().default('carnet-2019'),
   startDate: text('start_date').notNull(), // YYYY-MM-DD
+  /** ISO timestamp; orders cycles started the same day (numbering "Cycle n"). */
+  createdAt: text('created_at'),
+  status: text('status', { enum: CYCLE_STATUSES }).notNull().default('active'),
+  /** When the cycle was completed or abandoned (ISO timestamp). */
+  endedAt: text('ended_at'),
 });
 
 export const dailyReports = sqliteTable(
@@ -29,12 +38,16 @@ export const dailyReports = sqliteTable(
   {
     ...syncColumns,
     cycleId: text('cycle_id').notNull().references(() => trainingCycles.id),
-    dayIndex: integer('day_index').notNull(), // 0..55, week = floor(dayIndex / 7) + 1
-    date: text('date').notNull(),
+    /** 0..55, week = floor(dayIndex / 7) + 1. Days advance one per filled day, not by calendar. */
+    dayIndex: integer('day_index').notNull(),
+    date: text('date').notNull(), // YYYY-MM-DD, the day it was first filled
     practiceMinutes: integer('practice_minutes'),
     positives: text('positives'),
     obstacles: text('obstacles'),
     remedies: text('remedies'),
+    /** Obstacle / remedy ids from carnet/program.ts (E8), JSON arrays. */
+    obstacleIds: text('obstacle_ids', { mode: 'json' }).$type<string[]>().notNull().default([]),
+    remedyIds: text('remedy_ids', { mode: 'json' }).$type<string[]>().notNull().default([]),
   },
   (t) => [uniqueIndex('daily_reports_cycle_day').on(t.cycleId, t.dayIndex)],
 );

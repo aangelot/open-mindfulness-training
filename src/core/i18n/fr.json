@@ -14,7 +14,89 @@
     "title": "Carnet d’entraînement",
     "week": "Semaine {{n}}",
     "sittingMinutes": "Pratique assise type : {{min}} à {{max}} min",
-    "remindersCount": "{{count}} rappels"
+    "remindersCount": "{{count}} rappels",
+    "intro": "Le carnet vous accompagne pendant les huit semaines de l’entraînement fondamental. Chaque jour, notez votre pratique assise et vos rappels dans la vie quotidienne : c’est en observant votre expérience que vous progressez.",
+    "introCycles": "Un cycle avance d’un jour à chaque journée remplie : une pause ne fait pas sauter d’étape. Vous pouvez refaire le cycle autant de fois que vous le souhaitez.",
+    "start": "Commencer un cycle",
+    "newCycle": "Nouveau cycle",
+    "history": "Mes cycles",
+    "cycle": "Cycle {{n}}",
+    "status": {
+      "active": "En cours",
+      "completed": "Terminé",
+      "abandoned": "Abandonné"
+    },
+    "startedOn": "Commencé le {{date}}",
+    "period": "Du {{start}} au {{end}}",
+    "dayOf": "Jour {{day}} sur {{total}}",
+    "dayWeek": "Semaine {{week}} · J{{day}}",
+    "daysFilled_one": "{{count}} jour rempli sur {{total}}",
+    "daysFilled_other": "{{count}} jours remplis sur {{total}}",
+    "todayCard": "Aujourd’hui",
+    "fillDay": "Remplir le jour {{n}}",
+    "editDay": "Compléter le jour {{n}}",
+    "todayFilled": "Jour {{n}} commencé aujourd’hui.",
+    "allFilled": "Les 56 jours sont remplis. Bravo pour ces huit semaines de pratique !",
+    "complete": "Terminer le cycle",
+    "abandon": "Abandonner le cycle",
+    "resume": "Reprendre ce cycle",
+    "deleteCycle": "Supprimer ce cycle",
+    "readOnly": "Cycle {{status}} : consultation seulement.",
+    "confirm": {
+      "abandonTitle": "Abandonner ce cycle ?",
+      "abandonBody": "Vos notes sont conservées. Vous pourrez reprendre ce cycle plus tard depuis « Mes cycles ».",
+      "replaceTitle": "Un cycle est en cours",
+      "replaceBody": "Le cycle {{n}} est en cours (jour {{day}} sur {{total}}). Il sera marqué comme abandonné ; vous pourrez le reprendre plus tard.",
+      "replaceCompleteBody": "Le cycle {{n}} a ses 56 jours remplis. Il sera marqué comme terminé.",
+      "resumeBody": "Le cycle {{n}} en cours sera marqué comme abandonné.",
+      "deleteTitle": "Supprimer ce cycle ?",
+      "deleteBody": "Toutes les notes de ce cycle seront effacées. Cette action est définitive.",
+      "continue": "Continuer"
+    },
+    "weeks": "Les huit semaines",
+    "weekSummary": "{{days}}/7 jours · {{minutes}} min de pratique",
+    "weekNotStarted": "Pas encore commencée",
+    "sitting": "Pratique assise type",
+    "sittingIntro": "Introduction",
+    "sittingMain": "Pratique principale",
+    "sittingConclusion": "Conclusion",
+    "groups": {
+      "pensees": "Intégration des pensées",
+      "emotions": "Intégration des émotions"
+    },
+    "or": "ou",
+    "minutesShort": "{{n}} min",
+    "practice": {
+      "title": "Pratique assise",
+      "duration": "Temps de pratique (minutes)",
+      "durationPlaceholder": "Minutes",
+      "positives": "Expériences positives",
+      "obstacles": "Obstacles et difficultés rencontrés",
+      "remedies": "Remède appliqué",
+      "details": "Précisions (facultatif)",
+      "aboutObstacles": "Les obstacles et leurs remèdes (E8)"
+    },
+    "reminders": {
+      "title": "Rappels méditation en action",
+      "help": "Évaluez la fréquence de vos rappels aujourd’hui.",
+      "categories": {
+        "instantane": "Instantanés",
+        "petite_pause": "Petites pauses",
+        "situation": "Situations particulières"
+      },
+      "scale": "A aucun · B très rares · C quelques · D beaucoup · E très fréquents",
+      "rating": "{{letter}} : {{label}}"
+    },
+    "weekView": {
+      "sittingTitle": "Rapport de pratique assise",
+      "remindersTitle": "Évaluation des rappels",
+      "observations": "Observations particulières",
+      "observationsPlaceholder": "Vos observations sur ce rappel cette semaine",
+      "emptyDay": "Non rempli",
+      "totals": "{{sessions}} sessions · {{minutes}} min (au moins {{recommended}} sessions conseillées)"
+    },
+    "dayNotFound": "Ce jour n’est pas encore accessible : le cycle avance d’un jour à chaque journée remplie.",
+    "cycleNotFound": "Cycle introuvable."
   },
   "meditations": {
     "title": "Méditations",
@@ -64,5 +146,10 @@
     "complete": "Les {{count}} audios sont sur l’appareil ({{size}}).",
     "errorNetwork": "Le téléchargement s’est interrompu. Vérifiez votre connexion, puis reprenez.",
     "errorSpace": "Espace insuffisant sur l’appareil : il faut {{size}} de libre."
+  },
+  "common": {
+    "back": "Retour",
+    "cancel": "Annuler",
+    "delete": "Supprimer"
   }
 }

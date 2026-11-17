@@ -1,6 +1,6 @@
 # Architecture — Open Mindfulness Training (application mobile)
 
-> Mise à jour : 16 novembre 2026. Socle et volet Livre en place.
+> Mise à jour : 17 novembre 2026. Socle, volets Livre et Carnet en place.
 
 ## 1. Objectifs et contraintes
 
@@ -61,7 +61,7 @@ OMT_app/
 │   │   └── (tabs)/
 │   │       ├── _layout.tsx         # Onglets natifs
 │   │       ├── index.tsx           # Accueil
-│   │       ├── carnet/             # Pile de navigation du carnet
+│   │       ├── carnet/             # index (cycle en cours), cycles, cycle/[id]/{jour/[day], semaine/[week]}, pratique/[ref]
 │   │       ├── meditations/
 │   │       ├── livre/              # index (table des matières), [id] (lecture)
 │   │       └── profil.tsx
@@ -72,7 +72,7 @@ OMT_app/
 │   │   ├── theme/                  # Tokens de la charte + useTheme
 │   │   └── i18n/                   # fr.json
 │   ├── features/
-│   │   ├── carnet/program.ts       # Les 8 semaines sous forme de données (+ tests)
+│   │   ├── carnet/                 # program.ts (les 8 semaines en données), cycle.ts (calculs purs), store.ts (SQLite)
 │   │   ├── book/                   # types, accès au contenu, rendu
 │   │   ├── meditations/            # (volet 2)
 │   │   └── dreams/                 # (v2)
@@ -93,9 +93,12 @@ Règles :
 ## 5. Les quatre volets
 
 ### 5.1 Carnet d'entraînement
-- Le programme est une **donnée** : [src/features/carnet/program.ts](../src/features/carnet/program.ts) (pratique assise type, références P, durées, rappels par catégorie, échelle A–E). Les `id` des rappels sont stables : les évaluations y sont rattachées.
-- Un **cycle** a une date de début ; le jour J (0–55) et la semaine en découlent.
-- Tables : `training_cycles`, `daily_reports`, `reminder_ratings`, `reminder_notes`.
+- Le programme est une **donnée** : [src/features/carnet/program.ts](../src/features/carnet/program.ts) (pratique assise type, références P/E, durées, rappels par catégorie, échelle A–E, 6 obstacles et 9 remèdes de E8). Les `id` des rappels, obstacles et remèdes sont stockés : ne jamais les renommer.
+- **Cycles** : on peut refaire les 8 semaines autant de fois qu'on veut. Un seul cycle est `active` ; les autres sont `completed` ou `abandoned` et restent consultables (lecture seule). Commencer un nouveau cycle clôt l'actuel (terminé s'il a ses 56 jours, abandonné sinon) ; un cycle abandonné peut être repris. Suppression logique possible des cycles clos.
+- **Avancement jour par jour** ([cycle.ts](../src/features/carnet/cycle.ts)) : le jour à remplir est celui déjà commencé aujourd'hui, sinon le suivant. Une pause ne fait pas sauter de jour. Le jour reçoit sa date à la première saisie ; semaine = `floor(jour / 7) + 1`.
+- Écrans : accueil du carnet (carte « Aujourd'hui », pratique type de la semaine, 8 semaines), saisie du jour (durée, expériences positives, obstacles et remèdes en puces + précisions, rappels A–E), synthèse de semaine (les deux tableaux du carnet papier + observations particulières par rappel), « Mes cycles ». Les références P/E ouvrent la section du livre dans la pile du carnet.
+- Enregistrement automatique (texte : 600 ms après la frappe, à la sortie du champ et en quittant l'écran).
+- Tables : `training_cycles` (+ `status`, `ended_at`, `created_at`), `daily_reports` (+ `obstacle_ids`, `remedy_ids` en JSON), `reminder_ratings`, `reminder_notes`.
 
 ### 5.2 Méditations
 - Catalogue généré depuis `book.json` : chaque pratique P avec un audio.
@@ -154,7 +157,7 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | 0 — Socle | Expo, thème, onglets, SQLite, i18n, CI, import du contenu | ✅ |
 | 1 | Livre (sommaire, lecture, recherche, progression, audio, pack hors connexion) | ✅ |
 | 2 | Méditations (catalogue, lecteur, minuteur libre, pratiques types) | |
-| 3 | Carnet (cycles, saisie quotidienne, rappels A–E) | |
+| 3 | Carnet (cycles, saisie quotidienne, rappels A–E) | ✅ |
 | 4 | Comptes + synchronisation (Supabase OVH) | |
 | v2 | Journal de rêves, notifications, statistiques, pages du site (en savoir plus, dons), iOS | |
 
@@ -169,3 +172,4 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Google Play | Compte développeur à créer |
 | Audios hors connexion | Réencodage AAC 48 kbps mono, hébergé sur une release GitHub, téléchargé en entier après accord de l'utilisateur |
 | Livre v1 | Parties dépliables, lecteur dans la page, précédent/suivant, reprendre + sections lues, recherche plein texte. Pas de réglage de taille de texte pour l'instant |
+| Carnet v1 | Avancement jour par jour (pas calendaire), un seul cycle en cours, obstacles/remèdes E8 en puces + texte libre, écran « Aujourd'hui » + synthèse par semaine |

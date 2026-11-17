@@ -1,11 +1,11 @@
 import { router } from 'expo-router';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Pressable, StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
+import { StyleSheet, View, type NativeScrollEvent, type NativeSyntheticEvent } from 'react-native';
 
 import { AudioPlayerBar } from '@/core/audio/player-bar';
 import { spacing, useTheme } from '@/core/theme';
-import { Card, Icon, Screen, Text } from '@/ui';
+import { BackLink, Card, Icon, Screen, Text } from '@/ui';
 
 import { SectionView } from '../components/section-view';
 import { getNeighbors, getSection, refLabel, type SectionEntry } from '../content';
@@ -14,10 +14,19 @@ import { markOpened, markRead } from '../progress';
 /** Distance from the bottom (px) at which the section counts as read. */
 const READ_THRESHOLD = 120;
 
-export function SectionScreen({ id }: { id: string }) {
+/**
+ * `embedded`: opened from another tab's stack (e.g. a practice linked from the carnet).
+ * Back returns there, and there is no previous / next navigation, which would switch to the Livre tab.
+ */
+export function SectionScreen({ id, embedded = false }: { id: string; embedded?: boolean }) {
   const { t } = useTranslation();
   const entry = getSection(id);
   const { prev, next } = getNeighbors(id);
+  const back = embedded ? (
+    <BackLink label={t('common.back')} fallback="/carnet" />
+  ) : (
+    <BackLink label={t('book.toc')} fallback="/livre" />
+  );
   const readMarked = useRef(false);
   const viewport = useRef(0);
   const content = useRef(0);
@@ -35,7 +44,7 @@ export function SectionScreen({ id }: { id: string }) {
 
   if (!entry) {
     return (
-      <Screen header={<BackLink />}>
+      <Screen header={back}>
         <Text>{t('book.notFound')}</Text>
       </Screen>
     );
@@ -44,7 +53,7 @@ export function SectionScreen({ id }: { id: string }) {
 
   return (
     <Screen
-      header={<BackLink />}
+      header={back}
       title={section.title}
       subtitle={[section.ref && refLabel(section.ref), part.title].filter(Boolean).join(' · ')}
       scrollProps={{
@@ -65,25 +74,13 @@ export function SectionScreen({ id }: { id: string }) {
       }}>
       {section.audioUrl ? <AudioPlayerBar key={section.id} url={section.audioUrl} title={section.title} /> : null}
       <SectionView section={section} />
-      <View style={styles.nav}>
-        {next ? <NeighborCard entry={next} label={t('book.next')} direction="next" /> : null}
-        {prev ? <NeighborCard entry={prev} label={t('book.previous')} direction="prev" /> : null}
-      </View>
+      {embedded ? null : (
+        <View style={styles.nav}>
+          {next ? <NeighborCard entry={next} label={t('book.next')} direction="next" /> : null}
+          {prev ? <NeighborCard entry={prev} label={t('book.previous')} direction="prev" /> : null}
+        </View>
+      )}
     </Screen>
-  );
-}
-
-function BackLink() {
-  const { t } = useTranslation();
-  const { colors } = useTheme();
-  const back = () => (router.canGoBack() ? router.back() : router.replace('/livre'));
-  return (
-    <Pressable accessibilityRole="button" onPress={back} hitSlop={8} style={styles.back}>
-      <Icon name="arrow_back" ios="chevron.left" size={20} color={colors.primary} />
-      <Text variant="label" color="primary">
-        {t('book.toc')}
-      </Text>
-    </Pressable>
   );
 }
 
@@ -109,7 +106,6 @@ function NeighborCard({ entry, label, direction }: { entry: SectionEntry; label:
 }
 
 const styles = StyleSheet.create({
-  back: { flexDirection: 'row', alignItems: 'center', gap: spacing.xs, alignSelf: 'flex-start' },
   nav: { gap: spacing.sm, marginTop: spacing.lg },
   neighbor: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   grow: { flex: 1, gap: 2 },

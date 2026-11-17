@@ -6,6 +6,7 @@ import { StyleSheet, View } from 'react-native';
 import { OfflineAudioOffer } from '@/core/audio/offline-audio-card';
 import { spacing } from '@/core/theme';
 import { ResumeReading } from '@/features/book/components/resume-card';
+import { ActiveCycleToday } from '@/features/carnet/components/today-card';
 import { Card, Screen, Text } from '@/ui';
 
 export default function HomeScreen() {
@@ -21,6 +22,7 @@ export default function HomeScreen() {
           {t('home.subtitle')}
         </Text>
       </View>
+      <ActiveCycleToday />
       <ResumeReading />
       <OfflineAudioOffer />
       <Card onPress={() => router.navigate('/carnet')}>

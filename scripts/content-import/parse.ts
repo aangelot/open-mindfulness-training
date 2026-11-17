@@ -11,18 +11,8 @@ export function stripShortcodes(html: string): string {
   return html.replace(/\[\/?vc_[^\]]*\]/g, '');
 }
 
-const decode = (s: string) =>
-  s
-    .replace(/&nbsp;| /g, ' ')
-    .replace(/&#8211;/g, '–')
-    .replace(/&#8217;|&rsquo;/g, '’')
-    .replace(/&#8230;/g, '…')
-    .replace(/&#039;|&#39;/g, "'")
-    .replace(/&laquo;/g, '«')
-    .replace(/&raquo;/g, '»')
-    .replace(/&amp;/g, '&')
-    .replace(/&quot;/g, '"')
-    .replace(/&Prime;/g, '″');
+/** Decodes every HTML entity (&gt;, &prime;, &#8217;…) and turns non-breaking spaces into spaces. */
+const decode = (s: string) => parse(s).textContent.replace(/\u00a0/g, ' ');
 
 function collectInlines(node: Node, style: Omit<Inline, 'text'>, out: Inline[]) {
   if (node.nodeType === NodeType.TEXT_NODE) {
@@ -59,7 +49,8 @@ export function normalizeInlines(runs: Inline[]): Inline[] {
     }
   }
   for (const run of merged) run.text = run.text.replace(/ *\n */g, '\n').replace(/ {2,}/g, ' ');
-  if (merged[0]) merged[0].text = merged[0].text.trimStart();
+  // Arrows the authors typed as cross-reference markers ("> à Voir…", "-> Voir…").
+  if (merged[0]) merged[0].text = merged[0].text.trimStart().replace(/^-?>\s*(?:à\s+)?/, '');
   const last = merged.at(-1);
   if (last) last.text = last.text.trimEnd();
   return merged.filter((r) => r.text.length > 0).map(dropFalsy);

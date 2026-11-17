@@ -40,6 +40,17 @@ describe('parsePostHtml', () => {
   it('drops the opening heading once it is used as title', () => {
     expect(dropTitleHeading(parsed.blocks, 'Apprendre à « sentir son corps »')[0].type).toBe('paragraph');
   });
+
+  it('decodes every entity and drops leading arrow markers', () => {
+    const { blocks } = parsePostHtml(
+      '<p><strong>&gt; à Voir la conclusion.</strong></p><p>-&gt; Voir le chapitre 1</p><p>2&prime; &lsquo;x&rsquo;</p>',
+    );
+    expect(blocks.map((b) => (b.type === 'paragraph' ? b.inlines[0].text : ''))).toEqual([
+      'Voir la conclusion.',
+      'Voir le chapitre 1',
+      '2′ ‘x’',
+    ]);
+  });
 });
 
 describe('classifySlug', () => {

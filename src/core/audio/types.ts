@@ -1,33 +1,42 @@
 /**
- * Audio playback contract used by features (meditations, carnet, book).
- * Implemented with expo-audio (background playback + lock-screen controls).
- * Features depend on this interface, never on expo-audio directly.
+ * What a meditation session plays. Features describe a session as a plan of
+ * parts; the session engine (./session.ts) turns it into one native playlist,
+ * so the timing stays exact with the screen locked (Android suspends JS timers
+ * in the background, but not the player).
  */
 
-export type AudioSource =
-  | { kind: 'remote'; url: string } // MP3 on openmindfulness.net (or cached copy)
-  | { kind: 'asset'; module: number } // bundled sound, e.g. gong: require('@/assets/sounds/gong.mp3')
-  | { kind: 'silence'; seconds: number }; // timer gaps between gongs
+export type SessionItem =
+  /** A book audio, whole (Section.audioUrl). */
+  | { kind: 'track'; url: string }
+  /** The guided part of a practice, without its bells and silent tail. */
+  | { kind: 'guide'; url: string }
+  /** The spoken conclusion of a practice that has one (P42, P43). */
+  | { kind: 'outro'; url: string }
+  /** The book's bell (5 s). */
+  | { kind: 'bell' }
+  | { kind: 'silence'; seconds: number };
 
-export interface Track {
-  id: string;
+/** A labelled stretch of the session, shown on the player screen. */
+export interface SessionPart {
+  label: string;
+  /** Book reference of the practice ("P19"), if any. */
+  ref?: string;
+  /** No voice in this part (practice without audio, timer). */
+  silent?: boolean;
+  items: SessionItem[];
+}
+
+export interface SessionPlan {
+  /** Shown on the player and the lock screen. */
   title: string;
-  source: AudioSource;
+  subtitle?: string;
+  parts: SessionPart[];
 }
 
-export interface PlaybackState {
-  status: 'idle' | 'loading' | 'playing' | 'paused' | 'ended';
-  trackIndex: number;
-  positionSeconds: number;
-  durationSeconds: number;
-}
-
-export interface AudioEngine {
-  /** Replaces the queue and starts playing. A free timer is a queue: gong, silence, gong… */
-  play(queue: Track[], options?: { lockScreenTitle?: string }): Promise<void>;
-  pause(): void;
-  resume(): void;
-  seekTo(seconds: number): void;
-  stop(): void;
-  subscribe(listener: (state: PlaybackState) => void): () => void;
+/** Reported once, when the session ends or is stopped. */
+export interface SessionResult {
+  startedAt: string;
+  /** Furthest point reached, in seconds. */
+  listenedSeconds: number;
+  completed: boolean;
 }

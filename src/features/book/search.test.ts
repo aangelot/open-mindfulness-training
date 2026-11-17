@@ -1,4 +1,6 @@
-import { book, getNeighbors, getSection, normalize, readingOrder, refLabel, searchBook } from './content';
+import { book, getNeighbors, getSection, readingOrder, refLabel } from '@/core/book/content';
+
+import { normalize, searchBook } from './search';
 
 describe('reading order', () => {
   it('lists every section once, part by part', () => {

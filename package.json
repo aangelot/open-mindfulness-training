@@ -73,6 +73,9 @@
       "/node_modules/",
       "/android/",
       "/ios/"
-    ]
+    ],
+    "moduleNameMapper": {
+      "^@/assets/(.*)$": "<rootDir>/assets/$1"
+    }
   }
 }

@@ -8,7 +8,7 @@ import { AutosaveField } from '../components/autosave-field';
 import { SittingPractice } from '../components/sitting-practice';
 import { currentDayIndex, dayInWeek, daysOfWeek, localDate, programWeek } from '../cycle';
 import { formatShortDate, openDay } from '../format';
-import { OBSTACLES, RECOMMENDED_DAYS_PER_WEEK, REMEDIES, type Reminder } from '../program';
+import { OBSTACLES, RECOMMENDED_DAYS_PER_WEEK, REMEDIES, type Reminder } from '@/core/program';
 import { ratingKey, setWeekNote, useCycleDays, useCycleRatings, useCycles, useWeekNotes, type DailyReport } from '../store';
 
 const labelOf = (list: readonly { id: string; label: string }[], ids: readonly string[]) =>

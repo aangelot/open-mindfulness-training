@@ -10,7 +10,7 @@
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 
-import type { Book, Part, Section } from '../../src/features/book/types.ts';
+import type { Book, Part, Section } from '../../src/core/book/types.ts';
 import { classifySlug, dropTitleHeading, parsePostHtml, parseTocTitles, resolveTitle } from './parse.ts';
 
 const SITE = 'https://www.openmindfulness.net';

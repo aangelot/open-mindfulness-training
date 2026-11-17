@@ -10,6 +10,7 @@ import {
   deleteOfflineAudio,
   downloadOfflineAudio,
   offlineAudioAvailable,
+  offlineFileCount,
   pauseOfflineAudio,
   useOfflineAudio,
 } from './offline';
@@ -47,7 +48,7 @@ export function OfflineAudioSettings() {
   const { downloading, error, doneCount, doneBytes } = useOfflineAudio();
   if (!offlineAudioAvailable) return null;
 
-  const complete = doneCount === trackCount;
+  const complete = doneCount === offlineFileCount;
   const remaining = audioManifest.totalBytes - doneBytes;
 
   return (
@@ -61,8 +62,8 @@ export function OfflineAudioSettings() {
         <>
           <Text>
             {doneCount === 0 && !downloading
-              ? t('offlineAudio.streaming', { count: trackCount, size: formatBytes(audioManifest.totalBytes) })
-              : t('offlineAudio.progress', { done: doneCount, total: trackCount, size: formatBytes(doneBytes) })}
+              ? t('offlineAudio.streaming', { count: offlineFileCount, size: formatBytes(audioManifest.totalBytes) })
+              : t('offlineAudio.progress', { done: doneCount, total: offlineFileCount, size: formatBytes(doneBytes) })}
           </Text>
           {doneCount > 0 || downloading ? <ProgressBar value={doneBytes / audioManifest.totalBytes} /> : null}
         </>

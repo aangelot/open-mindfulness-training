@@ -5,7 +5,7 @@ import { radius, spacing, useTheme } from '@/core/theme';
 import { Text } from '@/ui';
 
 import { formatMinutes, openPractice } from '../format';
-import { SESSION_CONCLUSION, SESSION_INTRO, type PracticeStep, type ProgramWeek } from '../program';
+import { SESSION_CONCLUSION, SESSION_INTRO, type PracticeStep, type ProgramWeek } from '@/core/program';
 
 /** The week's "pratique assise type": intro, steps linking to the book, conclusion. */
 export function SittingPractice({ week }: { week: ProgramWeek }) {

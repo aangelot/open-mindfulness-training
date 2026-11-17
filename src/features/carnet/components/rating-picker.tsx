@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { radius, spacing, useTheme } from '@/core/theme';
 import { Text } from '@/ui';
 
-import { REMINDER_SCALE, type ReminderRating } from '../program';
+import { REMINDER_SCALE, type ReminderRating } from '@/core/program';
 
 const LETTERS = Object.keys(REMINDER_SCALE) as ReminderRating[];
 

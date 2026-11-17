@@ -76,9 +76,17 @@ export const reminderNotes = sqliteTable(
   (t) => [uniqueIndex('reminder_notes_cycle_week_reminder').on(t.cycleId, t.week, t.reminderId)],
 );
 
+export const MEDITATION_KINDS = ['guided', 'free', 'sitting_type', 'manual'] as const;
+export type MeditationKind = (typeof MEDITATION_KINDS)[number];
+
+/**
+ * One meditation: played in the app (a book practice, a sitting session, the free
+ * timer) or added by hand (`manual`, done without the app).
+ */
 export const meditationSessions = sqliteTable('meditation_sessions', {
   ...syncColumns,
-  kind: text('kind', { enum: ['guided', 'free', 'sitting_type'] }).notNull(),
+  kind: text('kind', { enum: MEDITATION_KINDS }).notNull(),
+  /** guided: "P19"; sitting_type: "<session id>:<minutes>" ("etape-3:30"); free and manual: null. */
   contentRef: text('content_ref'),
   startedAt: text('started_at').notNull(),
   durationSeconds: integer('duration_seconds').notNull(),

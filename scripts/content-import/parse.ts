@@ -4,7 +4,7 @@
  */
 import { parse, NodeType, type HTMLElement, type Node } from 'node-html-parser';
 
-import type { Block, Inline, SectionKind } from '../../src/features/book/types.ts';
+import type { Block, Inline, SectionKind } from '../../src/core/book/types.ts';
 
 /** Removes WPBakery shortcodes such as [vc_row css= »…»] and [/vc_column]. */
 export function stripShortcodes(html: string): string {

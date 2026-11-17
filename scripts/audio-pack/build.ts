@@ -14,7 +14,14 @@
  *   src/content/generated/audio.json   manifest bundled with the app (committed)
  *
  * Bump RELEASE whenever the encoded files change: installed apps compare the
- * manifest's release with what they downloaded.
+ * manifest's release with what they downloaded. Adding files (e.g. new guides)
+ * does not require it: apps download whatever is missing.
+ *
+ * Also produces, for the sitting sessions of the Méditations tab:
+ *   - a "guide" clip of every practice used by the program (see guide.ts):
+ *     the guided part, without the bells and the silent tail;
+ *   - assets/sounds/: the book's bell and silences of fixed lengths (bundled
+ *     with the app, used to pace sessions and the free timer).
  */
 import { execFile } from 'node:child_process';
 import { existsSync } from 'node:fs';
@@ -22,8 +29,11 @@ import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { promisify } from 'node:util';
 
-import type { Book } from '../../src/features/book/types.ts';
+import type { Book } from '../../src/core/book/types.ts';
 import type { AudioManifest } from '../../src/core/audio/manifest-types.ts';
+import { PROGRAM } from '../../src/core/program.ts';
+import { SILENCE_SECONDS } from '../../src/core/audio/sound-lengths.ts';
+import { analyze, guideBounds } from './guide.ts';
 import { assetName } from './names.ts';
 
 const run = promisify(execFile);
@@ -38,6 +48,12 @@ const SRC_DIR = root('.cache/audio/src');
 const OUT_DIR = root('.cache/audio/out');
 const BOOK = root('src/content/generated/book.json');
 const MANIFEST = root('src/content/generated/audio.json');
+const SOUNDS_DIR = root('assets/sounds');
+/** Practice whose opening bell becomes the app's bell. */
+const BELL_SOURCE_REF = 'P19';
+const ANALYSIS_RATE = 8000;
+/** Practices ending with their own spoken conclusion (the dedication): it gets its own clip. */
+const OUTRO_REFS = new Set(['P42', 'P43']);
 
 async function download(url: string, dest: string) {
   if (existsSync(dest)) return;
@@ -54,9 +70,50 @@ async function encode(src: string, dest: string) {
   await rename(`${dest}.part.m4a`, dest);
 }
 
-async function duration(file: string): Promise<number> {
+async function duration(file: string, decimals = 0): Promise<number> {
   const { stdout } = await run('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', file]);
-  return Math.round(Number(stdout.trim()));
+  const f = 10 ** decimals;
+  return Math.round(Number(stdout.trim()) * f) / f;
+}
+
+async function pcm(src: string): Promise<Float32Array> {
+  const { stdout } = await run('ffmpeg', ['-v', 'error', '-i', src, '-ac', '1', '-ar', String(ANALYSIS_RATE), '-f', 'f32le', '-'], {
+    encoding: 'buffer',
+    maxBuffer: 1 << 28,
+  });
+  return new Float32Array(stdout.buffer, stdout.byteOffset, stdout.length / 4);
+}
+
+/** Part of a practice, short fades so the cuts are inaudible. */
+async function encodeClip(src: string, dest: string, start: number, end: number) {
+  const length = end - start;
+  await run('ffmpeg', ['-loglevel', 'error', '-y', '-ss', String(start), '-t', length.toFixed(2), '-i', src, '-vn', '-map_metadata', '-1', '-ac', '1',
+    '-af', `afade=t=in:d=0.1,afade=t=out:st=${(length - 1.5).toFixed(2)}:d=1.5`,
+    '-c:a', 'aac', '-b:a', BITRATE, '-movflags', '+faststart', `${dest}.part.m4a`]);
+  await rename(`${dest}.part.m4a`, dest);
+}
+
+/** Guided part of a practice (and its spoken conclusion, for OUTRO_REFS). */
+async function encodeGuide(src: string, guide: string, outro: string | null) {
+  if (existsSync(guide) && (!outro || existsSync(outro))) return;
+  const bounds = guideBounds(analyze(await pcm(src), ANALYSIS_RATE), outro !== null);
+  if (!bounds) throw new Error(`${src}: no voice found`);
+  await encodeClip(src, guide, bounds.start, bounds.end);
+  if (outro && bounds.outro) await encodeClip(src, outro, bounds.outro.start, bounds.outro.end);
+}
+
+/** The bell (first seconds of any practice) and silences, bundled in assets/sounds. */
+async function buildSounds(bellSrc: string) {
+  await mkdir(SOUNDS_DIR, { recursive: true });
+  const bell = `${SOUNDS_DIR}/cloche.m4a`;
+  if (!existsSync(bell)) {
+    await run('ffmpeg', ['-loglevel', 'error', '-y', '-t', '5', '-i', bellSrc, '-vn', '-map_metadata', '-1', '-ac', '1', '-c:a', 'aac', '-b:a', '96k', bell]);
+  }
+  for (const seconds of SILENCE_SECONDS) {
+    const out = `${SOUNDS_DIR}/silence-${seconds}.m4a`;
+    if (existsSync(out)) continue;
+    await run('ffmpeg', ['-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'anullsrc=r=24000:cl=mono', '-t', String(seconds), '-c:a', 'aac', '-b:a', '16k', out]);
+  }
 }
 
 async function pool<T>(items: T[], size: number, task: (item: T) => Promise<void>) {
@@ -90,6 +147,15 @@ async function main() {
     tracks: {},
   };
 
+  // Practices played by the sitting sessions get a guide clip.
+  const sections = book.parts.flatMap((p) => p.sections);
+  const programRefs = new Set(PROGRAM.flatMap((w) => w.sitting.steps.flatMap((s) => s.refs)));
+  const guided = new Map(
+    sections.filter((s) => s.ref && programRefs.has(s.ref as `P${number}`) && s.audioUrl).map((s) => [s.audioUrl!, s.ref!]),
+  );
+  const bellUrl = sections.find((s) => s.ref === BELL_SOURCE_REF)?.audioUrl;
+  if (!bellUrl) throw new Error(`${BELL_SOURCE_REF} has no audio`);
+
   let done = 0;
   await pool(urls, CONCURRENCY, async (url) => {
     const name = names.get(url)!;
@@ -99,23 +165,38 @@ async function main() {
     await encode(src, out);
     const { size } = await stat(out);
     manifest.tracks[url] = { file: `${name}.m4a`, bytes: size, seconds: await duration(out) };
+    const ref = guided.get(url);
+    if (ref) {
+      const clip = async (kind: string) => {
+        const path = `${OUT_DIR}/${name}.${kind}.m4a`;
+        return { file: `${name}.${kind}.m4a`, bytes: (await stat(path)).size, seconds: await duration(path, 1) };
+      };
+      const withOutro = OUTRO_REFS.has(ref);
+      await encodeGuide(src, `${OUT_DIR}/${name}.guide.m4a`, withOutro ? `${OUT_DIR}/${name}.outro.m4a` : null);
+      manifest.tracks[url].guide = await clip('guide');
+      if (withOutro) manifest.tracks[url].outro = await clip('outro');
+    }
     done++;
     process.stdout.write(`\r${done}/${urls.length} ${name}`.padEnd(70));
   });
 
   // Stable key order keeps the committed manifest's diff readable.
   manifest.tracks = Object.fromEntries(Object.entries(manifest.tracks).sort(([a], [b]) => a.localeCompare(b)));
-  manifest.totalBytes = Object.values(manifest.tracks).reduce((sum, t) => sum + t.bytes, 0);
+  const files = Object.values(manifest.tracks).flatMap((t) => [t, t.guide, t.outro].filter((f) => f !== undefined));
+  manifest.totalBytes = files.reduce((sum, t) => sum + t.bytes, 0);
   await writeFile(MANIFEST, JSON.stringify(manifest, null, 1) + '\n');
-  console.log(`\n✓ ${urls.length} tracks, ${(manifest.totalBytes / 1e6).toFixed(0)} MB → ${MANIFEST}`);
+  console.log(`\n✓ ${urls.length} tracks, ${guided.size} guides, ${(manifest.totalBytes / 1e6).toFixed(0)} MB → ${MANIFEST}`);
+
+  await buildSounds(`${SRC_DIR}/${names.get(bellUrl)}.mp3`);
+  console.log(`✓ bell and silences → ${SOUNDS_DIR}`);
 
   if (process.argv.includes('--upload')) {
-    const files = Object.values(manifest.tracks).map((t) => `${OUT_DIR}/${t.file}`);
+    const paths = files.map((t) => `${OUT_DIR}/${t.file}`);
     const exists = await run('gh', ['release', 'view', RELEASE, '--repo', REPO]).then(() => true, () => false);
     if (!exists) {
       await run('gh', ['release', 'create', RELEASE, '--repo', REPO, '--title', `Audios du livre (${RELEASE})`, '--notes', 'Méditations du livre réencodées en AAC mono pour l’écoute hors connexion. Contenu sous CC BY-NC-SA 4.0 (voir CONTENT_LICENSE.md).']);
     }
-    await run('gh', ['release', 'upload', RELEASE, '--repo', REPO, '--clobber', ...files], { maxBuffer: 1 << 24 });
+    await run('gh', ['release', 'upload', RELEASE, '--repo', REPO, '--clobber', ...paths], { maxBuffer: 1 << 24 });
     console.log(`✓ uploaded to ${manifest.baseUrl}`);
   } else {
     console.log(`Publish: gh release upload ${RELEASE} ${OUT_DIR}/*.m4a --repo ${REPO}`);

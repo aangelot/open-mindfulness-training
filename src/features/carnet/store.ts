@@ -11,7 +11,7 @@ import { db } from '@/core/db/client';
 import { dailyReports, reminderNotes, reminderRatings, trainingCycles, type CycleStatus } from '@/core/db/schema';
 
 import { localDate } from './cycle';
-import type { ReminderRating } from './program';
+import type { ReminderRating } from '@/core/program';
 
 export type Cycle = typeof trainingCycles.$inferSelect;
 export type DailyReport = typeof dailyReports.$inferSelect;

@@ -8,6 +8,18 @@ export interface AudioManifest {
   /** Prefix of every file url, ends with "/". */
   baseUrl: string;
   totalBytes: number;
-  /** Keyed by the original url on openmindfulness.net (Section.audioUrl). */
-  tracks: Record<string, { file: string; bytes: number; seconds: number }>;
+  /**
+   * Keyed by the original url on openmindfulness.net (Section.audioUrl).
+   * `guide`: the guided part of a practice used by the sitting sessions, without
+   * its bells and silent tail (scripts/audio-pack/guide.ts). `outro`: the spoken
+   * conclusion of practices that have one (P42, P43), cut out of the guide.
+   */
+  tracks: Record<string, ManifestTrack & { guide?: ManifestTrack; outro?: ManifestTrack }>;
+}
+
+export interface ManifestTrack {
+  file: string;
+  bytes: number;
+  /** Whole seconds for the original tracks, tenths for guides. */
+  seconds: number;
 }

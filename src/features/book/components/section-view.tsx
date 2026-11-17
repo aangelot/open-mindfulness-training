@@ -3,7 +3,7 @@ import { Linking, StyleSheet, View } from 'react-native';
 import { fontFamily, spacing, useTheme } from '@/core/theme';
 import { Text } from '@/ui';
 
-import type { Block, Inline, Section } from '../types';
+import type { Block, Inline, Section } from '@/core/book/types';
 
 /** Renders the structured blocks of a book section. */
 export function SectionView({ section }: { section: Section }) {

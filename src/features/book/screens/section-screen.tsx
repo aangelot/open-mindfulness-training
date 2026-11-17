@@ -8,7 +8,7 @@ import { spacing, useTheme } from '@/core/theme';
 import { BackLink, Card, Icon, Screen, Text } from '@/ui';
 
 import { SectionView } from '../components/section-view';
-import { getNeighbors, getSection, refLabel, type SectionEntry } from '../content';
+import { getNeighbors, getSection, refLabel, type SectionEntry } from '@/core/book/content';
 import { markOpened, markRead } from '../progress';
 
 /** Distance from the bottom (px) at which the section counts as read. */

@@ -10,7 +10,7 @@ import { RatingPicker } from '../components/rating-picker';
 import { RefLink, SittingPractice } from '../components/sitting-practice';
 import { TOTAL_DAYS, currentDayIndex, dayInWeek, localDate, programWeek, weekOf } from '../cycle';
 import { formatDate } from '../format';
-import { OBSTACLES, OBSTACLES_REF, REMEDIES, type ReminderCategory } from '../program';
+import { OBSTACLES, OBSTACLES_REF, REMEDIES, type ReminderCategory } from '@/core/program';
 import { ratingKey, saveDay, setRating, useCycleDays, useCycleRatings, useCycles } from '../store';
 
 const CATEGORIES: ReminderCategory[] = ['instantane', 'petite_pause', 'situation'];

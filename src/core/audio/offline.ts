@@ -11,12 +11,15 @@ import { Platform } from 'react-native';
 import Storage from 'expo-sqlite/kv-store';
 import { create } from 'zustand';
 
-import manifestJson from '@/content/generated/audio.json';
+import { audioManifest } from './manifest';
+import type { ManifestTrack } from './manifest-types';
 
-import type { AudioManifest } from './manifest-types';
-
-export const audioManifest = manifestJson as AudioManifest;
-const tracks = Object.values(audioManifest.tracks);
+export { audioManifest, trackSeconds } from './manifest';
+/** Every file of the pack: the book audios, plus the guides and outros of the sitting sessions. */
+const tracks: ManifestTrack[] = Object.values(audioManifest.tracks).flatMap((t) =>
+  [t, t.guide, t.outro].filter((f) => f !== undefined),
+);
+export const offlineFileCount = tracks.length;
 
 /** expo-file-system has no web implementation: on web, audios are always streamed. */
 const fileSystemSupported = Platform.OS !== 'web';
@@ -28,7 +31,7 @@ export const offlineAudioAvailable = fileSystemSupported && tracks.length > 0;
 const root = () => new Directory(Paths.document, 'audio');
 const releaseDir = () => new Directory(root(), audioManifest.release);
 const localFile = (file: string) => new File(releaseDir(), file);
-const isComplete = (t: { file: string; bytes: number }) => {
+const isComplete = (t: ManifestTrack) => {
   if (!fileSystemSupported) return false;
   const f = localFile(t.file);
   return f.exists && f.size === t.bytes;
@@ -136,9 +139,6 @@ export function deleteOfflineAudio() {
   refresh();
 }
 
-/** Seconds of a book audio, known before it loads. */
-export const trackSeconds = (url: string) => audioManifest.tracks[url]?.seconds;
-
 /**
  * What the player should load for a book audio: the offline copy if present,
  * else the light version streamed from the release, else the site's original.
@@ -146,5 +146,13 @@ export const trackSeconds = (url: string) => audioManifest.tracks[url]?.seconds;
 export function resolveTrackUri(url: string): string {
   const track = audioManifest.tracks[url];
   if (!track) return url;
-  return isComplete(track) ? localFile(track.file).uri : audioManifest.baseUrl + track.file;
+  return fileUri(track);
+}
+
+const fileUri = (f: ManifestTrack) => (isComplete(f) ? localFile(f.file).uri : audioManifest.baseUrl + f.file);
+
+/** Guided part (or spoken conclusion) of a practice, see scripts/audio-pack/guide.ts. */
+export function clipOf(url: string, part: 'guide' | 'outro'): { uri: string; seconds: number } | null {
+  const clip = audioManifest.tracks[url]?.[part];
+  return clip ? { uri: fileUri(clip), seconds: clip.seconds } : null;
 }

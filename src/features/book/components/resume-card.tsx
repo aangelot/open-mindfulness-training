@@ -4,7 +4,7 @@ import { StyleSheet, View } from 'react-native';
 import { spacing, useTheme } from '@/core/theme';
 import { Card, Icon, Text } from '@/ui';
 
-import { getSection } from '../content';
+import { getSection } from '@/core/book/content';
 import { useBookProgress } from '../progress';
 import { openSection } from './toc';
 

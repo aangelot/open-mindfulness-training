@@ -6,8 +6,8 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { fontFamily, spacing, useTheme } from '@/core/theme';
 import { Icon, Text } from '@/ui';
 
-import { book, getSection } from '../content';
-import type { Part, Section } from '../types';
+import { book, getSection } from '@/core/book/content';
+import type { Part, Section } from '@/core/book/types';
 
 export const openSection = (id: string) => router.push({ pathname: '/livre/[id]', params: { id } });
 

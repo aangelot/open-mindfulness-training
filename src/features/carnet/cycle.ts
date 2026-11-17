@@ -5,7 +5,7 @@
  * a break does not skip days. The day to fill today is the one already started
  * today, otherwise the next one.
  */
-import { PROGRAM } from './program';
+import { PROGRAM } from '@/core/program';
 
 export const DAYS_PER_WEEK = 7;
 export const TOTAL_DAYS = PROGRAM.length * DAYS_PER_WEEK; // 56

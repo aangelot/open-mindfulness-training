@@ -10,7 +10,7 @@ import { SittingPractice } from '../components/sitting-practice';
 import { TodayCard } from '../components/today-card';
 import { TOTAL_DAYS, currentWeek, cycleNumbers, daysOfWeek, filledDays, localDate } from '../cycle';
 import { formatDate, isoToLocalDate, openCycles, openWeek } from '../format';
-import { PROGRAM, type ProgramWeek } from '../program';
+import { PROGRAM, type ProgramWeek } from '@/core/program';
 import { useCycleDays, useCycles, type Cycle, type DailyReport } from '../store';
 
 /** Carnet tab: the active cycle, or an invitation to start one. */

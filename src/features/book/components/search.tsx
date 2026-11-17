@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, TextInput, View } from 'react-native';
 import { fontFamily, radius, spacing, typography, useTheme } from '@/core/theme';
 import { Icon, Text } from '@/ui';
 
-import { searchBook } from '../content';
+import { searchBook } from '../search';
 import { openSection } from './toc';
 
 export function SearchField({ value, onChange }: { value: string; onChange: (q: string) => void }) {

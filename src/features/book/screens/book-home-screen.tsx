@@ -8,7 +8,7 @@ import { Screen, Text } from '@/ui';
 import { ResumeCard } from '../components/resume-card';
 import { SearchField, SearchResults } from '../components/search';
 import { Toc } from '../components/toc';
-import { readingOrder } from '../content';
+import { readingOrder } from '@/core/book/content';
 import { useBookProgress } from '../progress';
 
 const MIN_QUERY = 2;

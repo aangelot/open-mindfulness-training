@@ -7,6 +7,7 @@ import { OfflineAudioSettings } from '@/core/audio/offline-audio-card';
 import { readingOrder, readingStatus } from '@/core/book/content';
 import { i18n } from '@/core/i18n';
 import { formatDuration } from '@/core/format';
+import { DayReminderSettings } from '@/core/notifications/day-reminder-card';
 import { spacing } from '@/core/theme';
 import { Button, Card, ListRow, Screen, Text } from '@/ui';
 
@@ -72,6 +73,7 @@ export function ProfileScreen() {
           onPress={() => openPage(LINKS.contact)}
         />
       </Card>
+      <DayReminderSettings />
       <OfflineAudioSettings />
       <Card>
         <Label>{t('profile.data.title')}</Label>

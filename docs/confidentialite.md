@@ -1,6 +1,6 @@
 # Politique de confidentialité — Open Mindfulness (application mobile)
 
-*Dernière mise à jour : 17 novembre 2026*
+*Dernière mise à jour : 18 novembre 2026*
 
 ## En bref
 
@@ -8,7 +8,7 @@ Open Mindfulness ne collecte aucune donnée personnelle. Pas de compte, pas de p
 
 ## Les données enregistrées sur votre appareil
 
-L’application enregistre, uniquement sur votre appareil : vos séances de méditation (date, heure, durée, pratique suivie), votre carnet d’entraînement (cycles, jours remplis, durées de pratique, expériences, obstacles et remèdes, notes des rappels et observations), votre progression dans le livre (sections ouvertes et lues) et vos préférences (téléchargement des audios).
+L’application enregistre, uniquement sur votre appareil : vos séances de méditation (date, heure, durée, pratique suivie), votre carnet d’entraînement (cycles, jours remplis, durées de pratique, expériences, obstacles et remèdes, notes des rappels et observations), votre progression dans le livre (sections ouvertes et lues) et vos préférences (téléchargement des audios, rappel du soir).
 
 Ces données ne sont envoyées ni à l’éditeur ni à un tiers. Elles servent seulement au fonctionnement de l’application : carnet, historique des séances, statistiques, reprise de la lecture.
 
@@ -24,7 +24,7 @@ Les liens vers openmindfulness.net, la page de dons ou GitHub s’ouvrent dans v
 
 ## Autorisations
 
-L’application demande l’accès à internet et la lecture audio en arrière-plan (pour que la méditation continue écran verrouillé, avec ses contrôles de lecture). Elle n’utilise ni le micro, ni la localisation, ni les contacts, ni l’appareil photo.
+L’application demande l’accès à internet et la lecture audio en arrière-plan (pour que la méditation continue écran verrouillé, avec ses contrôles de lecture). Si vous activez le rappel du soir, elle demande aussi l’affichage de notifications : ce rappel est programmé sur votre appareil, sans passer par aucun serveur. Elle n’utilise ni le micro, ni la localisation, ni les contacts, ni l’appareil photo.
 
 ## Effacer vos données
 

@@ -1,6 +1,6 @@
 # Architecture — Open Mindfulness Training (application mobile)
 
-> Mise à jour : 17 novembre 2026. Socle, volets Livre, Carnet et Méditations en place, parcours guidé sur l’accueil, Profil (statistiques, liens du site, dons, pages légales).
+> Mise à jour : 18 novembre 2026. Socle, volets Livre, Carnet et Méditations en place, parcours guidé sur l’accueil, Profil (statistiques, liens du site, dons, pages légales), rappel du soir.
 
 ## 1. Objectifs et contraintes
 
@@ -71,6 +71,7 @@ OMT_app/
 │   │   ├── program.ts              # Les 8 semaines en données (pratiques assises, rappels, E8), partagé Carnet / Méditations
 │   │   ├── cycle.ts                # Calculs purs des cycles (jour, semaine en cours)
 │   │   ├── cycle-store.ts          # Lecture des cycles (SQLite), dont le cycle en cours : Carnet, accueil, Méditations
+│   │   ├── notifications/          # Rappel du soir du carnet : evenings.ts (calcul pur), day-reminder.ts, synchronisation, réglage du Profil
 │   │   ├── links.ts                # Liens vers la pile d’un autre onglet (section du livre, jour du carnet, pratique type)
 │   │   ├── format.ts               # Formats partagés (durées)
 │   │   ├── db/                     # schema.ts, client.ts, provider.tsx
@@ -153,7 +154,14 @@ Le livre se lit en trois temps, que l’app met en avant sans changer les onglet
 - Les URL externes sont toutes dans [features/profile/links.ts](../src/features/profile/links.ts).
 - La politique de confidentialité est écrite une fois dans `fr.json` (clé `privacy`) et recopiée dans [docs/confidentialite.md](confidentialite.md), son URL publique ; un test vérifie que les deux sont identiques.
 
-### 5.6 Journal de rêves (v2)
+### 5.6 Notifications
+Une seule : le **rappel du soir** pendant un cycle, qui invite à noter sa journée dans le carnet ([src/core/notifications/](../src/core/notifications/)).
+- Proposé une fois, juste après le démarrage d’un cycle (« Activer » demande alors l’autorisation Android) ; ensuite, interrupteur et heure (21 h par défaut, par quarts d’heure) dans le Profil.
+- Notifications **locales** (`expo-notifications`, aucun serveur, `enableRemoteNotifications: false`). Pas d’alarme exacte : le rappel peut arriver avec quelques minutes de retard.
+- Programmées une par une (déclencheur `DATE`) pour les **7 soirs à venir**, pas en répétition quotidienne, qui ne saurait pas sauter un jour : pas de rappel si la journée est déjà notée, ni sans cycle en cours, ni au-delà des jours restants ; sans ouverture de l’app pendant une semaine, les rappels s’arrêtent d’eux-mêmes.
+- Le planning est recalculé quand le carnet change (requête en direct sur le cycle en cours), quand le réglage change et à chaque retour dans l’app. Toucher le rappel ouvre le jour à remplir.
+
+### 5.7 Journal de rêves (v2)
 Une table de plus, synchronisée comme les autres.
 
 ## 6. Données et synchronisation
@@ -203,7 +211,8 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | 3 | Carnet (cycles, saisie quotidienne, rappels A–E) | ✅ |
 | 4 | Profil : statistiques, liens du site, dons, confidentialité, mentions légales, effacement des données | ✅ |
 | 5 | Comptes + synchronisation (Supabase OVH) | |
-| v2 | Journal de rêves, notifications, iOS | |
+| 4 bis | Notifications : rappel du soir du carnet | ✅ |
+| v2 | Journal de rêves, iOS | |
 
 ## 10. Décisions
 
@@ -220,4 +229,5 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Parcours guidé | Pas d’écran d’introduction au premier lancement : l’accueil s’adapte (« Par où commencer ? » puis « Cette semaine »). Lire les chapitres 1–2 est conseillé, jamais imposé. « Lire l’étape » compte toutes les sections de l’étape |
 | Méditations v1 | Pratiques types **assemblées** à partir des audios du livre (voix des auteurs, pas de voix de synthèse), en 20/30/40 min ; étape 5 en deux séances (pensées, émotions) ; minuteur libre ; séances enregistrées et ajout manuel, **indépendants du carnet** |
 | Profil v1 | Sans compte au premier déploiement (100 % local). Éditeur : Anthony Angelot, à titre personnel ; contact par les issues GitHub. Politique de confidentialité publiée en Markdown dans le dépôt. Don : page « modèle économique du don » de la Buddha University, ouverte hors de l’app |
+| Notifications | Une seule, le rappel du soir pendant un cycle, proposé au démarrage du cycle et réglable dans le Profil. Pas de rappel de méditation ni d’annonce de changement d’étape (déjà visibles dans l’app) |
 | Permissions Android | Micro (`RECORD_AUDIO`, ajouté par défaut par expo-audio) et stockage externe bloqués dans `app.json` : l’app n’enregistre rien et garde les audios dans son dossier privé |

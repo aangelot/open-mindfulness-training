@@ -7,6 +7,8 @@ import { useEffect } from 'react';
 
 import { initOfflineAudio } from '@/core/audio/offline';
 import { DatabaseProvider } from '@/core/db/provider';
+import { initDayReminder } from '@/core/notifications/day-reminder';
+import { DayReminderSync } from '@/core/notifications/day-reminder-sync';
 import { colors, useTheme } from '@/core/theme';
 
 SplashScreen.preventAutoHideAsync();
@@ -14,6 +16,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
   const { scheme } = useTheme();
   useEffect(initOfflineAudio, []);
+  useEffect(initDayReminder, []);
   const base = scheme === 'dark' ? DarkTheme : DefaultTheme;
   const navTheme = {
     ...base,
@@ -24,6 +27,7 @@ export default function RootLayout() {
     <ThemeProvider value={navTheme}>
       <DatabaseProvider>
         <Stack screenOptions={{ headerShown: false }} />
+        <DayReminderSync />
       </DatabaseProvider>
       <StatusBar style="auto" />
     </ThemeProvider>

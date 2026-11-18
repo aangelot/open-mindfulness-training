@@ -51,6 +51,14 @@
           "microphonePermission": false
         }
       ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#4092df",
+          "enableRemoteNotifications": false
+        }
+      ],
       "expo-sqlite",
       "expo-secure-store",
       "expo-localization",

@@ -2,6 +2,7 @@
 import { Alert } from 'react-native';
 
 import { i18n } from '@/core/i18n';
+import { offerDayReminder } from '@/core/notifications/day-reminder';
 
 import { TOTAL_DAYS, currentDayIndex, localDate } from '@/core/cycle';
 import { deleteCycle, endCycle, resumeCycle, startCycle, type DailyReport } from './store';
@@ -20,6 +21,7 @@ export function confirmStartCycle(active: ActiveCycleInfo | null, onStarted?: (i
   const start = (closeAs: 'completed' | 'abandoned') => {
     const id = startCycle(closeAs);
     onStarted?.(id);
+    offerDayReminder();
   };
   if (!active) {
     start('abandoned');

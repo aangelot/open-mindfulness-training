@@ -1,6 +1,6 @@
 # Architecture — Open Mindfulness Training (application mobile)
 
-> Mise à jour : 17 novembre 2026. Socle, volets Livre, Carnet et Méditations en place, parcours guidé sur l’accueil.
+> Mise à jour : 17 novembre 2026. Socle, volets Livre, Carnet et Méditations en place, parcours guidé sur l’accueil, Profil (statistiques, liens du site, dons, pages légales).
 
 ## 1. Objectifs et contraintes
 
@@ -64,7 +64,7 @@ OMT_app/
 │   │       ├── carnet/             # index (cycle en cours), cycles, cycle/[id]/{jour/[day], semaine/[week]}, pratique/[ref]
 │   │       ├── meditations/        # index, pratique-type/[id], seance (lecteur), minuteur, livre (catalogue), historique, ajouter
 │   │       ├── livre/              # index (table des matières), [id] (lecture)
-│   │       └── profil.tsx
+│   │       └── profil/             # index, statistiques, confidentialite, mentions-legales
 │   ├── core/
 │   │   ├── audio/                  # session.ts (moteur de séance), timeline.ts, sounds.ts, offline.ts (pack hors connexion), player-bar.tsx
 │   │   ├── book/                   # Contenu du livre (book.json), groupes de lecture, progression (book_progress), partagés par les volets
@@ -72,6 +72,7 @@ OMT_app/
 │   │   ├── cycle.ts                # Calculs purs des cycles (jour, semaine en cours)
 │   │   ├── cycle-store.ts          # Lecture des cycles (SQLite), dont le cycle en cours : Carnet, accueil, Méditations
 │   │   ├── links.ts                # Liens vers la pile d’un autre onglet (section du livre, jour du carnet, pratique type)
+│   │   ├── format.ts               # Formats partagés (durées)
 │   │   ├── db/                     # schema.ts, client.ts, provider.tsx
 │   │   ├── supabase/client.ts      # null si non configuré
 │   │   ├── theme/                  # Tokens de la charte + useTheme
@@ -81,15 +82,16 @@ OMT_app/
 │   │   ├── book/                   # recherche, rendu, progression
 │   │   ├── meditations/            # sitting-sessions.ts (pratiques types), timer.ts, catalog.ts, play.ts, store.ts, écrans
 │   │   ├── journey/                # Parcours guidé de l’accueil (« Par où commencer ? », « Cette semaine »)
+│   │   ├── profile/                # stats.ts (calculs purs), store.ts (lectures, effacement), links.ts (URL externes), écrans
 │   │   └── dreams/                 # (v2)
 │   ├── content/generated/book.json # Produit par l'import : ne pas éditer à la main
-│   └── ui/                         # Text, Screen, Card, StepRow…
+│   └── ui/                         # Text, Screen, Card, StepRow, ListRow…
 ├── drizzle/                        # Migrations SQLite générées (npm run db:generate)
 ├── supabase/migrations/            # Schéma serveur + RLS
 ├── scripts/content-import/         # Import WordPress → JSON (+ tests)
 ├── scripts/audio-pack/             # Pack audio hors connexion, guides des pratiques, sons embarqués (+ tests)
 ├── assets/                         # Icônes, splash, sounds/ (cloche et silences, générés par audio:build)
-└── docs/
+└── docs/                           # dont confidentialite.md (URL publique de la politique, pour le Play Store)
 ```
 
 Règles :
@@ -138,7 +140,20 @@ Le livre se lit en trois temps, que l’app met en avant sans changer les onglet
 - **Livre** : à la fin de chaque « Pratique type pour l’étape *n* », un lien vers la pratique guidée correspondante.
 - Les liens d’un volet à l’autre passent par le routeur ([core/links.ts](../src/core/links.ts)) ; les identifiants des pratiques types d’une semaine sont dans `weekSittingSessions` (program.ts), vérifiés par un test.
 
-### 5.5 Journal de rêves (v2)
+### 5.5 Profil
+- **Ma pratique** : temps total médité, série en cours, sections lues, et l’écran **Mes statistiques** :
+  - Méditation : temps total, séances, série en cours et meilleure série (jours consécutifs avec au moins une séance ; la série en cours tient jusqu’à la fin de la journée), minutes par semaine sur 12 semaines, calendrier de pratique (20 semaines à l’écran, défilement horizontal jusqu’à la première séance, repères de mois ; 4 niveaux : 1, 15, 30, 45 min).
+  - Carnet : jours remplis, cycles terminés, minutes notées ; pour un cycle (en cours par défaut, puces pour changer), note moyenne des rappels par semaine (A = 1 … E = 5) et les trois obstacles les plus fréquents.
+  - Livre : sections lues, par temps du parcours (Découvrir, les huit étapes, Continuer).
+  - Calculs purs dans [stats.ts](../src/features/profile/stats.ts) (testés). Graphiques dessinés avec des `View`, une seule teinte, valeur affichée au toucher.
+- **Soutenir la transmission** : bouton de don, ouvert dans le navigateur du système (aucun paiement dans l’app).
+- **Open Mindfulness** : site, séminaires et retraites, structures et coopérations, contact (onglet de navigateur intégré).
+- **Vos données** : « Effacer mes données » supprime réellement (pas de suppression logique, puisqu’il n’y a rien à synchroniser) les séances, le carnet et la progression de lecture ; les audios téléchargés restent.
+- **L’application** : Confidentialité, Mentions légales et crédits, signaler un problème (issues GitHub), code source, version.
+- Les URL externes sont toutes dans [features/profile/links.ts](../src/features/profile/links.ts).
+- La politique de confidentialité est écrite une fois dans `fr.json` (clé `privacy`) et recopiée dans [docs/confidentialite.md](confidentialite.md), son URL publique ; un test vérifie que les deux sont identiques.
+
+### 5.6 Journal de rêves (v2)
 Une table de plus, synchronisée comme les autres.
 
 ## 6. Données et synchronisation
@@ -183,8 +198,9 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | 1 | Livre (sommaire, lecture, recherche, progression, audio, pack hors connexion) | ✅ |
 | 2 | Méditations (pratiques types 20/30/40 min, audios du livre, minuteur libre, séances et ajout manuel) | ✅ |
 | 3 | Carnet (cycles, saisie quotidienne, rappels A–E) | ✅ |
-| 4 | Comptes + synchronisation (Supabase OVH) | |
-| v2 | Journal de rêves, notifications, statistiques, pages du site (en savoir plus, dons), iOS | |
+| 4 | Profil : statistiques, liens du site, dons, confidentialité, mentions légales, effacement des données | ✅ |
+| 5 | Comptes + synchronisation (Supabase OVH) | |
+| v2 | Journal de rêves, notifications, iOS | |
 
 ## 10. Décisions
 
@@ -200,3 +216,5 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Carnet v1 | Avancement jour par jour (pas calendaire), un seul cycle en cours, obstacles/remèdes E8 en puces + texte libre, écran « Aujourd'hui » + synthèse par semaine |
 | Parcours guidé | Pas d’écran d’introduction au premier lancement : l’accueil s’adapte (« Par où commencer ? » puis « Cette semaine »). Lire les chapitres 1–2 est conseillé, jamais imposé. « Lire l’étape » compte toutes les sections de l’étape |
 | Méditations v1 | Pratiques types **assemblées** à partir des audios du livre (voix des auteurs, pas de voix de synthèse), en 20/30/40 min ; étape 5 en deux séances (pensées, émotions) ; minuteur libre ; séances enregistrées et ajout manuel, **indépendants du carnet** |
+| Profil v1 | Sans compte au premier déploiement (100 % local). Éditeur : Anthony Angelot, à titre personnel ; contact par les issues GitHub. Politique de confidentialité publiée en Markdown dans le dépôt. Don : page « modèle économique du don » de la Buddha University, ouverte hors de l’app |
+| Permissions Android | Micro (`RECORD_AUDIO`, ajouté par défaut par expo-audio) et stockage externe bloqués dans `app.json` : l’app n’enregistre rien et garde les audios dans son dossier privé |

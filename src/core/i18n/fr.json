@@ -248,8 +248,80 @@
   },
   "profile": {
     "title": "Profil",
-    "noAccount": "Vos données restent sur cet appareil. Créez un compte pour les sauvegarder et les retrouver sur un autre appareil.",
-    "syncUnavailable": "Synchronisation non configurée pour ce build."
+    "practice": "Ma pratique",
+    "sectionsRead": "sections lues",
+    "data": {
+      "title": "Vos données",
+      "body": "Vos séances, votre carnet et votre progression de lecture restent sur cet appareil : rien n’est envoyé sur internet.",
+      "erase": "Effacer mes données",
+      "eraseTitle": "Effacer toutes vos données ?",
+      "eraseBody": "Vos séances de méditation, vos cycles du carnet et votre progression de lecture seront supprimés de cet appareil. Les audios téléchargés sont conservés. Cette action est définitive.",
+      "eraseConfirm": "Tout effacer"
+    },
+    "donate": {
+      "title": "Soutenir la transmission",
+      "body": "L’enseignement de la pleine présence est offert gratuitement, dans une économie du don. Si cette pratique vous fait du bien, vous pouvez soutenir sa transmission.",
+      "button": "Faire un don"
+    },
+    "site": {
+      "title": "Open Mindfulness",
+      "site": "Le site openmindfulness.net",
+      "siteDetail": "La méthode, le livre et le carnet en ligne",
+      "seminars": "Séminaires et retraites",
+      "seminarsDetail": "Pratiquer en groupe, en ligne ou sur place",
+      "structures": "Structures et coopérations",
+      "structuresDetail": "L’Institut AOM et l’Université du Bouddha",
+      "contact": "Nous contacter",
+      "contactDetail": "Le formulaire de contact du site"
+    },
+    "app": {
+      "title": "L’application",
+      "privacy": "Confidentialité",
+      "legal": "Mentions légales et crédits",
+      "feedback": "Signaler un problème, proposer une idée",
+      "feedbackDetail": "Sur GitHub",
+      "source": "Code source",
+      "sourceDetail": "Logiciel libre, sous licence MIT",
+      "version": "Version {{version}}"
+    },
+    "stats": {
+      "title": "Mes statistiques",
+      "seeAll": "Voir mes statistiques",
+      "meditation": "Méditation",
+      "meditationEmpty": "Aucune séance pour l’instant. Vos séances de méditation, faites dans l’application ou ajoutées à la main, apparaîtront ici.",
+      "totalTime": "de méditation",
+      "sessions_one": "séance",
+      "sessions_other": "séances",
+      "days_one": "{{count}} jour",
+      "days_other": "{{count}} jours",
+      "currentStreak": "série en cours",
+      "bestStreak": "meilleure série",
+      "perWeek": "Par semaine",
+      "calendar": "Calendrier de pratique",
+      "thisWeek": "Cette semaine",
+      "weekOf": "Semaine du {{date}}",
+      "none": "aucune pratique",
+      "calendarHint": "Touchez un jour pour voir sa durée.",
+      "less": "Moins",
+      "more": "Plus",
+      "levelFrom": "{{minutes}} min ou plus",
+      "carnet": "Carnet",
+      "carnetEmpty": "Commencez un cycle dans le carnet pour suivre ici vos jours de pratique et vos rappels.",
+      "daysFilled_one": "jour rempli",
+      "daysFilled_other": "jours remplis",
+      "cyclesCompleted_one": "cycle terminé",
+      "cyclesCompleted_other": "cycles terminés",
+      "carnetMinutes": "de pratique notée",
+      "reminders": "Rappels au fil des semaines",
+      "remindersEmpty": "Aucun rappel noté dans ce cycle.",
+      "remindersScale": "Note moyenne de la semaine, de A ({{a}}) à E ({{e}}).",
+      "ratingWeek": "Semaine {{week}} : {{rating}}",
+      "ratingNone": "Semaine {{week}} : aucune note",
+      "weekShort": "S{{n}}",
+      "obstacles": "Obstacles les plus fréquents",
+      "book": "Livre",
+      "eightSteps": "Les huit étapes"
+    }
   },
   "audio": {
     "play": "Lecture",
@@ -316,5 +388,109 @@
       "title": "Avant de commencer",
       "body": "Nous vous conseillons de lire d’abord l’introduction et les chapitres 1 et 2 du livre : ils présentent la pleine présence et la méthode que le carnet met en pratique."
     }
+  },
+  "privacy": {
+    "title": "Confidentialité",
+    "updated": "Dernière mise à jour : 17 novembre 2026",
+    "online": "Lire cette politique en ligne",
+    "sections": [
+      {
+        "title": "En bref",
+        "paragraphs": [
+          "Open Mindfulness ne collecte aucune donnée personnelle. Pas de compte, pas de publicité, pas de mesure d’audience, pas de traceur : ce que vous notez dans l’application reste sur votre appareil."
+        ]
+      },
+      {
+        "title": "Les données enregistrées sur votre appareil",
+        "paragraphs": [
+          "L’application enregistre, uniquement sur votre appareil : vos séances de méditation (date, heure, durée, pratique suivie), votre carnet d’entraînement (cycles, jours remplis, durées de pratique, expériences, obstacles et remèdes, notes des rappels et observations), votre progression dans le livre (sections ouvertes et lues) et vos préférences (téléchargement des audios).",
+          "Ces données ne sont envoyées ni à l’éditeur ni à un tiers. Elles servent seulement au fonctionnement de l’application : carnet, historique des séances, statistiques, reprise de la lecture."
+        ]
+      },
+      {
+        "title": "Sauvegarde de l’appareil",
+        "paragraphs": [
+          "Si la sauvegarde de votre téléphone est activée, Android peut inclure ces données dans votre sauvegarde Google, pour les restaurer sur un nouvel appareil. Cette sauvegarde est gérée par Google dans votre compte : l’éditeur n’y a pas accès. Vous pouvez la désactiver dans les réglages d’Android."
+        ]
+      },
+      {
+        "title": "Connexions à internet",
+        "paragraphs": [
+          "L’application se connecte à internet uniquement pour lire ou télécharger les audios des méditations. Ils sont hébergés sur GitHub (dépôt du projet) et, en secours, sur openmindfulness.net. Comme pour toute page web, ces serveurs reçoivent l’adresse IP de votre appareil et des informations techniques sur la requête, qu’ils traitent selon leurs propres règles. Aucune information sur vous ou sur votre pratique ne leur est transmise.",
+          "Les liens vers openmindfulness.net, la page de dons ou GitHub s’ouvrent dans votre navigateur : les règles de confidentialité de ces sites s’appliquent alors."
+        ]
+      },
+      {
+        "title": "Autorisations",
+        "paragraphs": [
+          "L’application demande l’accès à internet et la lecture audio en arrière-plan (pour que la méditation continue écran verrouillé, avec ses contrôles de lecture). Elle n’utilise ni le micro, ni la localisation, ni les contacts, ni l’appareil photo."
+        ]
+      },
+      {
+        "title": "Effacer vos données",
+        "paragraphs": [
+          "Profil › Effacer mes données supprime définitivement vos séances, votre carnet et votre progression de lecture. Désinstaller l’application efface aussi toutes ses données. L’éditeur ne détenant aucune donnée vous concernant, il n’a rien à vous communiquer ni à supprimer de son côté."
+        ]
+      },
+      {
+        "title": "Évolutions",
+        "paragraphs": [
+          "Un compte facultatif, pour sauvegarder et synchroniser vos données entre plusieurs appareils, pourra être proposé plus tard. Cette politique sera mise à jour avant sa mise en service."
+        ]
+      },
+      {
+        "title": "Contact",
+        "paragraphs": [
+          "Éditeur : Anthony Angelot. Pour toute question, ouvrez une demande sur la page GitHub du projet : github.com/aangelot/open-mindfulness-training/issues. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr)."
+        ]
+      }
+    ]
+  },
+  "legal": {
+    "title": "Mentions légales et crédits",
+    "contentLicense": "Licence du contenu (CC BY-NC-SA 4.0)",
+    "codeLicense": "Licence du code (MIT)",
+    "sections": [
+      {
+        "title": "Éditeur",
+        "paragraphs": [
+          "Anthony Angelot, à titre personnel. Projet bénévole, gratuit et sans but lucratif.",
+          "Directeur de la publication : Anthony Angelot. Contact : github.com/aangelot/open-mindfulness-training/issues."
+        ]
+      },
+      {
+        "title": "Hébergement et distribution",
+        "paragraphs": [
+          "L’application est distribuée par Google Play (Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irlande).",
+          "Le code source et les fichiers audio allégés sont hébergés par GitHub, Inc. (88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis). Les textes et audios d’origine sont publiés sur openmindfulness.net."
+        ]
+      },
+      {
+        "title": "Contenu",
+        "paragraphs": [
+          "Les textes, les méditations guidées et le programme d’entraînement en huit étapes sont issus du Grand Livre de la pleine présence de Lama Denys Rinpoché (Albin Michel, 2019) et du site openmindfulness.net.",
+          "Ce contenu est diffusé sous licence Creative Commons BY-NC-SA 4.0 : attribution, pas d’utilisation commerciale, partage dans les mêmes conditions."
+        ]
+      },
+      {
+        "title": "Application",
+        "paragraphs": [
+          "Le code de l’application est un logiciel libre, sous licence MIT : chacun peut le consulter, le réutiliser et y contribuer sur GitHub.",
+          "Elle s’appuie notamment sur Expo et React Native (MIT), React (MIT), Drizzle ORM (Apache 2.0), i18next (MIT), Zustand (MIT), SQLite (domaine public), la police Open Sans (SIL Open Font License 1.1) et les icônes Material Symbols (Apache 2.0). Merci à leurs auteurs."
+        ]
+      },
+      {
+        "title": "Avertissement",
+        "paragraphs": [
+          "La pleine présence est un entraînement de l’esprit. Elle ne remplace pas un avis ou un suivi médical ou psychologique : en cas de difficulté, consultez un professionnel de santé."
+        ]
+      },
+      {
+        "title": "Remerciements",
+        "paragraphs": [
+          "Merci à Lama Denys Rinpoché et à toutes les personnes qui rendent ces enseignements librement accessibles."
+        ]
+      }
+    ]
   }
 }

@@ -200,6 +200,10 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 - Développement : `npx expo run:android` (Android Studio requis) ou `eas build --profile development`.
 - Play Store : `eas build --profile production` → AAB. Il faut un compte développeur Google Play (25 $ une fois) et un compte Expo (gratuit).
 - Identifiant de l'application : `net.openmindfulness.app`, définitif une fois publié.
+- Version affichée dans `app.json` (`version`, 1.0.0) ; le `versionCode` Android est tenu par EAS (`appVersionSource: remote`, `autoIncrement`).
+- **Mises à jour à distance** (`expo-updates` + EAS Update) : canaux `preview` et `production` (`eas.json`). `runtimeVersion` suit la politique `fingerprint` : elle change dès que le code natif change, si bien qu’une mise à jour JavaScript n’atteint que les builds compatibles. Publier : `npx eas-cli@latest update --channel production --environment production --message "…"`. Un module natif ajouté impose une nouvelle build.
+- **Fiche Play Store** : textes, réponses aux questionnaires de la console et visuels dans [docs/play-store/](play-store/fiche.md).
+- Compte personnel : la production n’est ouverte qu’après un **test fermé de 12 testeurs inscrits pendant 14 jours**. Le premier AAB s’envoie à la main dans la console ; `eas submit` ensuite (clé de compte de service Google).
 
 ## 9. Feuille de route
 
@@ -219,10 +223,10 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Sujet | Décision |
 |---|---|
 | Licence du code | MIT |
-| Licence du contenu | CC BY-NC-SA 4.0, **provisoire** (confirmation des auteurs à obtenir) |
+| Licence du contenu | CC BY-NC-SA 4.0, confirmée par les auteurs (novembre 2026) |
 | Backend | Supabase auto-hébergé sur OVH (compte à créer) |
 | Compte | Optionnel |
-| Google Play | Compte développeur à créer |
+| Google Play | Compte développeur personnel (test fermé obligatoire avant la production). Catégorie Santé et remise en forme, public 18 ans et plus, aucune donnée collectée |
 | Audios hors connexion | Réencodage AAC 48 kbps mono, hébergé sur une release GitHub, téléchargé en entier après accord de l'utilisateur |
 | Livre v1 | Parties dépliables, lecteur dans la page, précédent/suivant, reprendre + sections lues, recherche plein texte. Pas de réglage de taille de texte pour l'instant |
 | Carnet v1 | Avancement jour par jour (pas calendaire), un seul cycle en cours, obstacles/remèdes E8 en puces + texte libre, écran « Aujourd'hui » + synthèse par semaine |
@@ -230,4 +234,4 @@ Le site sert des MP3 320 kbps stéréo (1,37 Go pour 136 fichiers, environ 9 h 3
 | Méditations v1 | Pratiques types **assemblées** à partir des audios du livre (voix des auteurs, pas de voix de synthèse), en 20/30/40 min ; étape 5 en deux séances (pensées, émotions) ; minuteur libre ; séances enregistrées et ajout manuel, **indépendants du carnet** |
 | Profil v1 | Sans compte au premier déploiement (100 % local). Éditeur : Anthony Angelot, à titre personnel ; contact par les issues GitHub. Politique de confidentialité publiée en Markdown dans le dépôt. Don : page « modèle économique du don » de la Buddha University, ouverte hors de l’app |
 | Notifications | Une seule, le rappel du soir pendant un cycle, proposé au démarrage du cycle et réglable dans le Profil. Pas de rappel de méditation ni d’annonce de changement d’étape (déjà visibles dans l’app) |
-| Permissions Android | Micro (`RECORD_AUDIO`, ajouté par défaut par expo-audio) et stockage externe bloqués dans `app.json` : l’app n’enregistre rien et garde les audios dans son dossier privé |
+| Permissions Android | Micro (`RECORD_AUDIO`, ajouté par défaut par expo-audio), stockage externe et affichage par-dessus les autres apps (`SYSTEM_ALERT_WINDOW`, outils de développement) bloqués dans `app.json` : l’app n’enregistre rien et garde les audios dans son dossier privé |

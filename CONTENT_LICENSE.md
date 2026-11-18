@@ -8,7 +8,7 @@ et n'est **pas** couvert par la licence MIT. Il est distribué sous licence
 [Creative Commons BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.fr) :
 attribution, pas d'utilisation commerciale, partage dans les mêmes conditions.
 
-> ⚠️ Licence provisoire, en attente de confirmation par les auteurs du contenu.
+> Licence confirmée par les auteurs du contenu (novembre 2026).
 
 Fichiers concernés :
 - `src/content/generated/` (texte du livre importé du site)

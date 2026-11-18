@@ -2,7 +2,10 @@
   "expo": {
     "name": "Open Mindfulness",
     "slug": "open-mindfulness-training",
-    "version": "0.1.0",
+    "version": "1.0.0",
+    "runtimeVersion": {
+      "policy": "fingerprint"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "omt",
@@ -22,7 +25,8 @@
       "blockedPermissions": [
         "android.permission.RECORD_AUDIO",
         "android.permission.READ_EXTERNAL_STORAGE",
-        "android.permission.WRITE_EXTERNAL_STORAGE"
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW"
       ]
     },
     "web": {
@@ -111,6 +115,15 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "75a100f6-32e2-440d-8693-425cace78118"
+      }
+    },
+    "owner": "anthony_angelot",
+    "updates": {
+      "url": "https://u.expo.dev/75a100f6-32e2-440d-8693-425cace78118"
     }
   }
 }

@@ -84,6 +84,12 @@ export function initOfflineAudio() {
   if (dir.exists) {
     for (const item of dir.list()) if (item.name !== audioManifest.release) item.delete();
   }
+  // So are files the manifest no longer lists (e.g. a voice replaced by another).
+  const release = releaseDir();
+  if (release.exists) {
+    const known = new Set(tracks.map((t) => t.file));
+    for (const item of release.list()) if (!known.has(item.name)) item.delete();
+  }
   refresh();
   if (choice === 'accepted' && useOfflineAudio.getState().doneCount < tracks.length) void downloadOfflineAudio();
 }

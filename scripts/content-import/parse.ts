@@ -82,11 +82,32 @@ export interface ParsedPost {
   blocks: Block[];
 }
 
+/**
+ * The section's audio: the page's first one, except that many pages offer each practice
+ * read by a woman then by a man, each under a heading ("Audio femme", "Audio homme - Pratique 6").
+ * We keep the man's voice so that a sitting session never mixes voices (some practices
+ * only exist with his).
+ */
+function pickAudio(root: HTMLElement): string | null {
+  const audios: { url: string; label: string }[] = [];
+  let label = '';
+  for (const el of root.querySelectorAll('h2.vcex-heading, audio source')) {
+    if (el.tagName === 'H2') label = el.text.trim().toLowerCase();
+    else audios.push({ url: (el.getAttribute('src') ?? '').replace(/\?_=\d+$/, ''), label });
+  }
+  const [first, second] = audios;
+  if (!first) return null;
+  // Labels read "Audio femme" or "Audio femme - Pratique 6"; a few pages only say it in
+  // the file name ("…-P35-FEMME.mp3" under "Audio 1").
+  const voice = (a?: { url: string; label: string }) =>
+    a && (/^audio (femme|homme)\b/.exec(a.label)?.[1] ?? /-(femme|homme)-?\.mp3$/i.exec(a.url)?.[1].toLowerCase());
+  return voice(first) === 'femme' && voice(second) === 'homme' ? second!.url : first.url;
+}
+
 export function parsePostHtml(rendered: string): ParsedPost {
   const root = parse(stripShortcodes(rendered));
 
-  const source = root.querySelector('audio source');
-  const audioUrl = source?.getAttribute('src')?.replace(/\?_=\d+$/, '') ?? null;
+  const audioUrl = pickAudio(root);
   const pdfUrl =
     root
       .querySelectorAll('a')

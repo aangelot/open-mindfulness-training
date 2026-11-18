@@ -80,8 +80,10 @@ export function closingBellStart(windows: WindowStats[]): number {
 /** Spoken passages [start, end] in seconds, pauses under MERGE_GAP_SECONDS merged. */
 export function voiceSpans(windows: WindowStats[], from: number, to: number): [number, number][] {
   const spans: [number, number][] = [];
+  const loud = (i: number) => (windows[i]?.peakDb ?? -Infinity) > VOICE_DB;
   for (let i = Math.round(from / WINDOW_SECONDS); i < Math.round(to / WINDOW_SECONDS); i++) {
-    if (windows[i].peakDb <= VOICE_DB) continue;
+    // A lone loud window is a click or a breath, not speech (some recordings have a noisy floor).
+    if (!loud(i) || !(loud(i - 1) || loud(i + 1))) continue;
     const t = i * WINDOW_SECONDS;
     const last = spans.at(-1);
     if (last && t - last[1] < MERGE_GAP_SECONDS) last[1] = t + WINDOW_SECONDS;

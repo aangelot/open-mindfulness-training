@@ -1,6 +1,6 @@
 {
  "source": "https://www.openmindfulness.net",
- "generatedAt": "2026-11-17T09:05:35.096Z",
+ "generatedAt": "2026-11-18T13:23:12.088Z",
  "parts": [
   {
    "id": "introduction",
@@ -2241,7 +2241,7 @@
      "ref": "P2",
      "kind": "pratique",
      "title": "Découvrir la présence attentive",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/2.AUDIO-2-P2-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/2.AUDIO-2-P2-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/2.Chapitre-2-P2.pdf",
      "blocks": [
       {
@@ -2414,7 +2414,7 @@
      "ref": "P3",
      "kind": "pratique",
      "title": "Découvrir la présence ouverte",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.AUDIO-3-P3-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.AUDIO-3-P3-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.Chapitre-2-P3.pdf",
      "blocks": [
       {
@@ -2592,7 +2592,7 @@
      "ref": "P4",
      "kind": "pratique",
      "title": "Découvrir la présence empathique et bienveillante",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/4.AUDIO-4-P4-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/4.AUDIO-4-P4-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/4.Chapitre-2-P4.pdf",
      "blocks": [
       {
@@ -4337,7 +4337,7 @@
      "ref": "P6",
      "kind": "pratique",
      "title": "Entrer dans la sensation corporelle",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-1-AUDIO-5-P6-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-1-AUDIO-5-P6-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-1-P6.pdf",
      "blocks": [
       {
@@ -4629,7 +4629,7 @@
      "ref": "P7",
      "kind": "pratique",
      "title": "La simple présence assise",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-1-AUDIO-6-P7-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-1-AUDIO-6-P7-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-1-P7.pdf",
      "blocks": [
       {
@@ -5179,7 +5179,7 @@
      "ref": "P9",
      "kind": "pratique",
      "title": "Les sept points de la posture assise",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-1-AUDIO-8-P9-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-1-AUDIO-8-P9-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-1-P9.pdf",
      "blocks": [
       {
@@ -7068,7 +7068,7 @@
      "ref": "P11",
      "kind": "pratique",
      "title": "En pratique préliminaire : trois respirations lentes et profondes",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/2.ETAPE-2-AUDIO-3-P11-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/2.ETAPE-2-AUDIO-3-P11-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/2.ETAPE-2-P11.pdf",
      "blocks": [
       {
@@ -7139,7 +7139,7 @@
      "ref": "P12",
      "kind": "pratique",
      "title": "La présence attentive au souffle",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-2-AUDIO-4-P12-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-2-AUDIO-4-P12-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-2-P12.pdf",
      "blocks": [
       {
@@ -7226,7 +7226,7 @@
      "ref": "P13",
      "kind": "pratique",
      "title": "La respiration abdominale",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-2-AUDIO-5-P13-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-2-AUDIO-5-P13-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-2-P13.pdf",
      "blocks": [
       {
@@ -7301,7 +7301,7 @@
      "ref": "P14",
      "kind": "pratique",
      "title": "La sensation du souffle au niveau des narines",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-2-AUDIO-6-P14-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-2-AUDIO-6-P14-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-2-P14.pdf",
      "blocks": [
       {
@@ -7391,7 +7391,7 @@
      "ref": "P15",
      "kind": "pratique",
      "title": "La respiration complète",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-2-AUDIO-7-P15-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-2-AUDIO-7-P15-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-2-P15.pdf",
      "blocks": [
       {
@@ -7494,7 +7494,7 @@
      "ref": "P16",
      "kind": "pratique",
      "title": "La sensation continue du souffle",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-2-AUDIO-8-P16-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-2-AUDIO-8-P16-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-2-P16.pdf",
      "blocks": [
       {
@@ -7566,7 +7566,7 @@
      "ref": "P17",
      "kind": "pratique",
      "title": "Une petite pause de présence attentive pendant vingt et un cycles respiratoires",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/8.ETAPE-2-AUDIO-9-P17-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/8.ETAPE-2-AUDIO-9-P17-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/8.ETAPE-2-P17.pdf",
      "blocks": [
       {
@@ -7659,7 +7659,7 @@
      "ref": "P18",
      "kind": "pratique",
      "title": "La sensation du « corps-énergie »",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-2-AUDIO-10-P18-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/P18-ch3-étape-2-.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-2-P18.pdf",
      "blocks": [
       {
@@ -8495,7 +8495,7 @@
      "ref": "P19",
      "kind": "pratique",
      "title": "Ouverture dans l’expiration",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-3-AUDIO-6-P19-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-3-AUDIO-6-P19-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-3-P19.pdf",
      "blocks": [
       {
@@ -8829,7 +8829,7 @@
      "ref": "P20",
      "kind": "pratique",
      "title": "Vision panoramique, vision nue et sensorialité globale",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/10.ETAPE-3-AUDIO-11-P20-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/10.ETAPE-3-AUDIO-11-P20-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/10.ETAPE-3-P20.pdf",
      "blocks": [
       {
@@ -8946,7 +8946,7 @@
      "ref": "P21",
      "kind": "pratique",
      "title": "La présence ouverte au son : l’audition nue",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-3-AUDIO-13-P21-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-3-AUDIO-13-P21-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-3-P21.pdf",
      "blocks": [
       {
@@ -9040,7 +9040,7 @@
      "ref": "P22",
      "kind": "pratique",
      "title": "Les éléments de la nature et leur contemplation",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-3-AUDIO-15-P22-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-3-AUDIO-15-P22-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-3-P22.pdf",
      "blocks": [
       {
@@ -9278,7 +9278,7 @@
      "ref": "P23",
      "kind": "pratique",
      "title": "La vision nue, ouverte, d’un objet proche ou lointain",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/15.ETAPE-3-AUDIO-16-P23-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/15.ETAPE-3-AUDIO-16-P23-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/15.ETAPE-3-P23.pdf",
      "blocks": [
       {
@@ -9391,7 +9391,7 @@
      "ref": "P24",
      "kind": "pratique",
      "title": "La présence attentive et ouverte en marchant",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/16.ETAPE-3-AUDIO-17-P24-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/16.ETAPE-3-AUDIO-17-P24-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/16.ETAPE-3-P24.pdf",
      "blocks": [
       {
@@ -9607,7 +9607,7 @@
      "ref": "P25",
      "kind": "pratique",
      "title": "Des petites pauses de présence attentive et ouverte",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/17.ETAPE-3-AUDIO-18-P25-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/17.ETAPE-3-AUDIO-18-P25-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/17.ETAPE-3-P25.pdf",
      "blocks": [
       {
@@ -10438,7 +10438,7 @@
      "ref": "P26",
      "kind": "pratique",
      "title": "La vision panoramique dans l’ouvert relâché",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-4-AUDIO-8-P26-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-4-AUDIO-8-P26-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-4-P26.pdf",
      "blocks": [
       {
@@ -10525,7 +10525,7 @@
      "ref": "P27",
      "kind": "pratique",
      "title": "La contemplation de l’espace",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/8.ETAPE-4-AUDIO-9-P27-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/8.ETAPE-4-AUDIO-9-P27-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/8.ETAPE-4-P27.pdf",
      "blocks": [
       {
@@ -10597,7 +10597,7 @@
      "ref": "P28",
      "kind": "pratique",
      "title": "L’observateur abstrait et l’observateur absent",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-4-AUDIO-10-P28-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-4-AUDIO-10-P28-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-4-P28.pdf",
      "blocks": [
       {
@@ -11568,7 +11568,7 @@
      "ref": null,
      "kind": "intro",
      "title": "Les trois principales modalités d’intégration des pensées",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.1.ETAPE-5-AUDIO-9-INTRO-1-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/P29-ch3-étape-5.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-5-INTRO-P29-P30-P31.pdf",
      "blocks": [
       {
@@ -11736,7 +11736,7 @@
      "ref": "P30",
      "kind": "pratique",
      "title": "L’entraînement des pensées en l’état d’observateur abstrait",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/11.ETAPE-5-AUDIO-12-P30-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/11.ETAPE-5-AUDIO-12-P30-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/11.ETAPE-5-P30.pdf",
      "blocks": [
       {
@@ -11819,7 +11819,7 @@
      "ref": "P31",
      "kind": "pratique",
      "title": "L’intégration des pensées avec et sans étiquetage",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-5-AUDIO-13-P31-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-5-AUDIO-13-P31-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-5-P31.pdf",
      "blocks": [
       {
@@ -12439,7 +12439,7 @@
      "ref": "P32",
      "kind": "pratique",
      "title": "L’intégration des émotions avec la méthode en trois temps",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/20.ETAPE-5-AUDIO-22-P32-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/20.ETAPE-5-AUDIO-22-P32-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/20.ETAPE-5-P32.pdf",
      "blocks": [
       {
@@ -12803,7 +12803,7 @@
      "ref": "P33",
      "kind": "pratique",
      "title": "Pleine présence à une émotion agréable",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/22.ETAPE-5-AUDIO-24-P33-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/22.ETAPE-5-AUDIO-24-P33-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/22.ETAPE-5-P33.pdf",
      "blocks": [
       {
@@ -12870,7 +12870,7 @@
      "ref": "P34",
      "kind": "pratique",
      "title": "Pleine présence à une émotion désagréable",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-5-AUDIO-25-P34-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-5-AUDIO-25-P34-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-5-P34.pdf",
      "blocks": [
       {
@@ -13770,7 +13770,7 @@
      "ref": "P35",
      "kind": "pratique",
      "title": "L’entraînement relationnel, « accueillir-offrir » : oui à l’instant présent dans un sourire de bienveillance",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-6-AUDIO-P35-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-6-AUDIO-P35-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-6-P35.pdf",
      "blocks": [
       {
@@ -13910,7 +13910,7 @@
      "ref": "P36",
      "kind": "pratique",
      "title": "La pratique d’accueillir-offrir en général : réceptivité-disponibilité dans la pulsation du souffle",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-6-AUDIO-P36-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-6-AUDIO-P36-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-6-P36.pdf",
      "blocks": [
       {
@@ -14281,7 +14281,7 @@
      "ref": "P37",
      "kind": "pratique",
      "title": "La pratique d’accueillir-offrir avec soi",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-6-AUDIO-P37-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-6-AUDIO-P37-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-6-P37.pdf",
      "blocks": [
       {
@@ -14496,7 +14496,7 @@
      "ref": "P38",
      "kind": "pratique",
      "title": "Découvrir accueillir-offrir avec l’autre",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/13.ETAPE-6-AUDIO-P38-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/13.ETAPE-6-AUDIO-P38-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/13.ETAPE-6-P38.pdf",
      "blocks": [
       {
@@ -14611,7 +14611,7 @@
      "ref": "P39",
      "kind": "pratique",
      "title": "Accueillir-offrir en toutes situations",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-6-AUDIO-P39-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-6-AUDIO-P39-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-6-P39.pdf",
      "blocks": [
       {
@@ -15070,7 +15070,7 @@
      "ref": "P40",
      "kind": "pratique",
      "title": "Une pratique pour s’entrainer à l’écoute profonde",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-6-AUDIO-P40-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-6-AUDIO-P40-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-6-P40.pdf",
      "blocks": [
       {
@@ -15834,7 +15834,7 @@
      "ref": "P41",
      "kind": "pratique",
      "title": "Intégrer l’entraînement au rythme de la vie quotidienne",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.ETAPE-7-AUDIO-4-P41-FEMME-.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.ETAPE-7-AUDIO-4-P41-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/3.ETAPE-7-P41.pdf",
      "blocks": [
       {
@@ -16086,7 +16086,7 @@
      "ref": "P42",
      "kind": "pratique",
      "title": "Les huit points d’une méditation assise type",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/6.ETAPE-7-AUDIO-7-P42-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/P42-ch3-étape-7.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/6.ETAPE-7-P42.pdf",
      "blocks": [
       {
@@ -16519,7 +16519,7 @@
      "ref": "P43",
      "kind": "pratique",
      "title": "La méditation essentielle en cinq points",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/8.ETAPE-7-AUDIO-9-P43-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/P43-ch3-étape-7.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/8.ETAPE-7-P43.pdf",
      "blocks": [
       {
@@ -16641,7 +16641,7 @@
      "ref": "P44",
      "kind": "pratique",
      "title": "La pleine présence dans l’action",
-     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/9.ETAPE-7-AUDIO-10-P44-FEMME.mp3",
+     "audioUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/9.ETAPE-7-AUDIO-10-P44-HOMME.mp3",
      "pdfUrl": "https://www.openmindfulness.net/wp-content/uploads/2019/05/9.ETAPE-7-P44.pdf",
      "blocks": [
       {

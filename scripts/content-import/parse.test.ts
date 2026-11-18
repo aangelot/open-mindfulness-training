@@ -41,6 +41,22 @@ describe('parsePostHtml', () => {
     expect(dropTitleHeading(parsed.blocks, 'Apprendre à « sentir son corps »')[0].type).toBe('paragraph');
   });
 
+  it("keeps the man's voice when the page offers both", () => {
+    const audio = (label: string, src: string) =>
+      `<h2 class="vcex-module vcex-heading"><span class="vcex-heading-inner">${label}</span></h2><audio><source src="https://site/${src}.mp3?_=3" /></audio>`;
+    expect(parsePostHtml(audio('Audio femme', 'P42-F') + audio('Audio homme', 'P42')).audioUrl).toBe('https://site/P42.mp3');
+    expect(parsePostHtml(audio('Audio femme - Pratique 6', 'P6-F') + audio('Audio homme - Pratique 6', 'P6-H')).audioUrl).toBe(
+      'https://site/P6-H.mp3',
+    );
+    expect(parsePostHtml(audio('Audio 1', 'P35-FEMME') + audio('Audio 2', 'P35-HOMME')).audioUrl).toBe('https://site/P35-HOMME.mp3');
+    expect(parsePostHtml(audio('Audio homme', 'P7-H') + audio('Audio femme', 'P7-F')).audioUrl).toBe('https://site/P7-H.mp3');
+    expect(parsePostHtml(audio('Audio 1', 'A1') + audio('Audio 2', 'A2')).audioUrl).toBe('https://site/A1.mp3');
+    // A woman-only first audio followed by another practice stays as is.
+    expect(parsePostHtml(audio('Audio 1', 'P10') + audio('Audio femme', 'P10-F') + audio('Audio homme', 'P10-H')).audioUrl).toBe(
+      'https://site/P10.mp3',
+    );
+  });
+
   it('decodes every entity and drops leading arrow markers', () => {
     const { blocks } = parsePostHtml(
       '<p><strong>&gt; à Voir la conclusion.</strong></p><p>-&gt; Voir le chapitre 1</p><p>2&prime; &lsquo;x&rsquo;</p>',

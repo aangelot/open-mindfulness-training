@@ -3,7 +3,7 @@ import { analyze, guideBounds } from './guide';
 const RATE = 8000;
 
 /** A synthetic practice: bell, silence, "voice" (noise bursts), room tone, bell. */
-function practice(parts: { kind: 'bell' | 'voice' | 'quiet' | 'zero'; seconds: number }[]): Float32Array {
+function practice(parts: { kind: 'bell' | 'voice' | 'quiet' | 'zero' | 'click'; seconds: number }[]): Float32Array {
   const total = parts.reduce((sum, p) => sum + p.seconds, 0);
   const out = new Float32Array(total * RATE);
   let at = 0;
@@ -19,7 +19,9 @@ function practice(parts: { kind: 'bell' | 'voice' | 'quiet' | 'zero'; seconds: n
             ? 0.5 * noise() * (Math.sin(2 * Math.PI * 3 * t) > -0.5 ? 1 : 0.01)
             : p.kind === 'quiet'
               ? 0.003 * noise()
-              : 0;
+              : p.kind === 'click'
+                ? (i === 0 ? 0.1 : 0.003 * noise()) // one loud sample in room tone
+                : 0;
     }
     at += p.seconds * RATE;
   }
@@ -44,6 +46,19 @@ describe('guide bounds', () => {
     expect(b.end).toBeLessThan(115);
     expect(b.bell).toBeGreaterThan(410);
     expect(b.bell).toBeLessThanOrEqual(412);
+  });
+
+  it('ignores lone clicks in the silent practice', () => {
+    const pcm = practice([
+      { kind: 'bell', seconds: 5 },
+      { kind: 'zero', seconds: 2 },
+      { kind: 'voice', seconds: 60 },
+      { kind: 'quiet', seconds: 60 },
+      { kind: 'click', seconds: 60 },
+      { kind: 'click', seconds: 60 },
+      { kind: 'bell', seconds: 6 },
+    ]);
+    expect(guideBounds(analyze(pcm, RATE))!.end).toBeLessThan(70);
   });
 
   it('splits off a spoken conclusion after a long pause', () => {

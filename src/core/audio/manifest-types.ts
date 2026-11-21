@@ -13,9 +13,13 @@ export interface AudioManifest {
    * `guide`: the guided part of a practice used by the sitting sessions, without
    * its bells and silent tail (scripts/audio-pack/guide.ts). `outro`: the spoken
    * conclusion of practices that have one (P42, P43), cut out of the guide.
+   * `title`: the announcement of the practice that opens the guide (light sessions).
    */
-  tracks: Record<string, ManifestTrack & { guide?: ManifestTrack; outro?: ManifestTrack }>;
+  tracks: Record<string, ManifestTrack & { guide?: ManifestTrack; outro?: ManifestTrack; title?: ManifestTrack }>;
 }
+
+/** Clips cut out of a practice for the sitting sessions. */
+export type ClipKind = 'guide' | 'outro' | 'title';
 
 export interface ManifestTrack {
   file: string;

@@ -126,24 +126,45 @@
     "current": "Séance en cours",
     "sitting": {
       "title": "Pratiques types",
-      "intro": "La pratique assise de chaque étape, guidée par les audios du livre, en 20, 30 ou 40 minutes.",
+      "intro": "La pratique assise de chaque étape, aux durées prévues par le livre : guidée par ses audios, ou épurée.",
       "step": "Étape {{n}}",
-      "durations": "20, 30 ou 40 min",
+      "version": "Version",
+      "versions": {
+        "full": "Guidée",
+        "light": "Épurée"
+      },
+      "versionHints": {
+        "full": "Le guidage complet de chaque pratique, puis un temps de pratique en silence.",
+        "light": "Seul le titre de chaque pratique est annoncé, puis vous pratiquez en silence."
+      },
       "duration": "Durée",
+      "lengths": {
+        "short": "Courte",
+        "long": "Longue"
+      },
+      "lengthChip": "{{name}} · {{n}} min",
       "minutes": "{{n}} min",
+      "minutesRange": "{{min}} à {{max}} min",
       "start": "Commencer ({{n}} min)",
-      "planSubtitle": "Pratique type · {{n}} min",
+      "planSubtitle": "Pratique type {{version}} · {{n}} min",
       "composition": "Déroulé de la séance",
-      "explain": "Chaque pratique commence par une cloche, puis le guidage du livre, puis un temps de pratique en silence.",
-      "selfContained": "La méditation en huit (ou cinq) points comprend sa propre introduction et sa dédicace : le temps de pratique en silence vient avant la dédicace.",
+      "explain": {
+        "full": "Chaque pratique commence par une cloche, puis le guidage du livre, puis un temps de pratique en silence. Elle dure le temps prévu par le livre, ou celui de son guidage s’il est plus long.",
+        "light": "Chaque pratique commence par une cloche et l’annonce de son titre, puis se fait en silence pendant le temps prévu par le livre."
+      },
+      "selfContained": {
+        "full": "La méditation en huit (ou cinq) points comprend sa propre introduction et sa dédicace : le temps de pratique en silence vient avant la dédicace.",
+        "light": "La méditation en huit (ou cinq) points garde sa dédicace parlée, après le temps de pratique en silence."
+      },
       "introPart": "Introduction",
       "conclusionPart": "Conclusion",
       "voice": "{{duration}} guidées",
+      "announced": "titre annoncé",
       "silence": "{{duration}} en silence",
+      "dedication": "dédicace ({{duration}})",
+      "overrun": "Prévu par le livre : {{n}} min, le guidage est plus long",
       "settle": "Installez-vous dans la posture, en silence.",
       "noAudio": "Pas d’audio dans le livre : pratique en silence.",
-      "omitted_one": "{{count}} pratique de l’étape n’entre pas dans cette durée : {{refs}}.",
-      "omitted_other": "{{count}} pratiques de l’étape n’entrent pas dans cette durée : {{refs}}.",
       "readInBook": "Lire la pratique type dans le livre",
       "notFound": "Pratique type introuvable.",
       "groups": {
@@ -260,7 +281,7 @@
     "resultsCount_other": "{{count}} sections",
     "guided": {
       "title": "Pratiquer cette étape",
-      "body": "Faites cette pratique type guidée par les audios du livre, en 20, 30 ou 40 minutes.",
+      "body": "Faites cette pratique type aux durées prévues par le livre, guidée par ses audios ou en version épurée.",
       "start": "Pratiquer avec l’audio guidé"
     }
   },
@@ -394,7 +415,7 @@
       "read": "Lire l’étape {{n}}",
       "readInBook": "Lire l’étape {{n}} dans le livre",
       "practice": "Pratiquer",
-      "practiceHint": "La pratique type de l’étape, guidée, en 20, 30 ou 40 min",
+      "practiceHint": "La pratique type de l’étape, guidée ou épurée",
       "practicedToday": "{{minutes}} min de pratique aujourd’hui",
       "practiceGuided": "Pratiquer avec l’audio guidé",
       "note": "Noter dans le carnet",

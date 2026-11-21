@@ -10,6 +10,8 @@
  *   last ~6 s  the same bell again
  *
  * The "guide" is [OPENING_BELL_SECONDS, end of the last spoken passage + margin].
+ * The "title" is the first spoken phrase: every guidance opens by announcing
+ * the practice, then pauses (titleBounds).
  * Pure functions over a mono PCM signal: tested without ffmpeg.
  */
 
@@ -77,8 +79,8 @@ export function closingBellStart(windows: WindowStats[]): number {
   return onset * WINDOW_SECONDS;
 }
 
-/** Spoken passages [start, end] in seconds, pauses under MERGE_GAP_SECONDS merged. */
-export function voiceSpans(windows: WindowStats[], from: number, to: number): [number, number][] {
+/** Spoken passages [start, end] in seconds, pauses under `mergeGap` merged. */
+export function voiceSpans(windows: WindowStats[], from: number, to: number, mergeGap = MERGE_GAP_SECONDS): [number, number][] {
   const spans: [number, number][] = [];
   const loud = (i: number) => (windows[i]?.peakDb ?? -Infinity) > VOICE_DB;
   for (let i = Math.round(from / WINDOW_SECONDS); i < Math.round(to / WINDOW_SECONDS); i++) {
@@ -86,7 +88,7 @@ export function voiceSpans(windows: WindowStats[], from: number, to: number): [n
     if (!loud(i) || !(loud(i - 1) || loud(i + 1))) continue;
     const t = i * WINDOW_SECONDS;
     const last = spans.at(-1);
-    if (last && t - last[1] < MERGE_GAP_SECONDS) last[1] = t + WINDOW_SECONDS;
+    if (last && t - last[1] < mergeGap) last[1] = t + WINDOW_SECONDS;
     else spans.push([t, t + WINDOW_SECONDS]);
   }
   return spans;
@@ -125,4 +127,20 @@ export function guideBounds(windows: WindowStats[], withOutro = false): GuideBou
     };
   }
   return { start: OPENING_BELL_SECONDS, end: endAfter(last[1]), bell };
+}
+
+/** A pause this long ends the title announcement (words inside it are closer). */
+const TITLE_GAP_SECONDS = 1;
+/** Kept around the title so it does not start or end abruptly. */
+const TITLE_MARGIN_SECONDS = 0.3;
+
+/** The first spoken phrase of the guidance: the announcement of the practice. */
+export function titleBounds(windows: WindowStats[]): { start: number; end: number } | null {
+  const bell = closingBellStart(windows);
+  const first = voiceSpans(windows, OPENING_BELL_SECONDS, bell, TITLE_GAP_SECONDS)[0];
+  if (!first) return null;
+  return {
+    start: tenth(Math.max(OPENING_BELL_SECONDS, first[0] - TITLE_MARGIN_SECONDS)),
+    end: tenth(first[1] + TITLE_MARGIN_SECONDS),
+  };
 }

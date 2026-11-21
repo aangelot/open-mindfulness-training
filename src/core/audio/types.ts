@@ -12,6 +12,8 @@ export type SessionItem =
   | { kind: 'guide'; url: string }
   /** The spoken conclusion of a practice that has one (P42, P43). */
   | { kind: 'outro'; url: string }
+  /** The announcement of a practice, the first words of its guide (light sessions). */
+  | { kind: 'title'; url: string }
   /** The book's bell (5 s). */
   | { kind: 'bell' }
   | { kind: 'silence'; seconds: number };

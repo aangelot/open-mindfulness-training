@@ -1,7 +1,7 @@
 {
  "release": "audio-v1",
  "baseUrl": "https://github.com/aangelot/open-mindfulness-training/releases/download/audio-v1/",
- "totalBytes": 265610607,
+ "totalBytes": 266156382,
  "tracks": {
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/1-ETAPE-5-AUDIO-1.mp3": {
    "file": "1-etape-5-audio-1.m4a",
@@ -51,6 +51,11 @@
     "file": "10-etape-3-audio-11-p20-homme.guide.m4a",
     "bytes": 1561763,
     "seconds": 252
+   },
+   "title": {
+    "file": "10-etape-3-audio-11-p20-homme.title.m4a",
+    "bytes": 21175,
+    "seconds": 3.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/10.ETAPE-4-AUDIO-11-E26.mp3": {
@@ -86,6 +91,11 @@
     "file": "11-etape-5-audio-12-p30-homme.guide.m4a",
     "bytes": 1609456,
     "seconds": 259.8
+   },
+   "title": {
+    "file": "11-etape-5-audio-12-p30-homme.title.m4a",
+    "bytes": 23968,
+    "seconds": 3.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/11.ETAPE-6-AUDIO-E44.mp3": {
@@ -101,6 +111,11 @@
     "file": "12-etape-3-audio-13-p21-homme.guide.m4a",
     "bytes": 2008862,
     "seconds": 323.8
+   },
+   "title": {
+    "file": "12-etape-3-audio-13-p21-homme.title.m4a",
+    "bytes": 22364,
+    "seconds": 3.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-5-AUDIO-13-P31-HOMME.mp3": {
@@ -111,6 +126,11 @@
     "file": "12-etape-5-audio-13-p31-homme.guide.m4a",
     "bytes": 1601699,
     "seconds": 258.3
+   },
+   "title": {
+    "file": "12-etape-5-audio-13-p31-homme.title.m4a",
+    "bytes": 25313,
+    "seconds": 4.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/12.ETAPE-6-AUDIO-E45.mp3": {
@@ -136,6 +156,11 @@
     "file": "13-etape-6-audio-p38-homme.guide.m4a",
     "bytes": 752037,
     "seconds": 122
+   },
+   "title": {
+    "file": "13-etape-6-audio-p38-homme.title.m4a",
+    "bytes": 16082,
+    "seconds": 2.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/14.ETAPE-3-AUDIO-15-P22-HOMME.mp3": {
@@ -156,6 +181,11 @@
     "file": "14-etape-6-audio-p39-homme.guide.m4a",
     "bytes": 1582150,
     "seconds": 255
+   },
+   "title": {
+    "file": "14-etape-6-audio-p39-homme.title.m4a",
+    "bytes": 18302,
+    "seconds": 2.9
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/15.ETAPE-5-AUDIO-17-E33.mp3": {
@@ -226,6 +256,11 @@
     "file": "2-etape-2-audio-3-p11-homme.guide.m4a",
     "bytes": 1065179,
     "seconds": 172.5
+   },
+   "title": {
+    "file": "2-etape-2-audio-3-p11-homme.title.m4a",
+    "bytes": 30573,
+    "seconds": 4.9
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/2.ETAPE-3-AUDIO-3-E12.mp3": {
@@ -251,6 +286,11 @@
     "file": "20-etape-5-audio-22-p32-homme.guide.m4a",
     "bytes": 4879417,
     "seconds": 783.5
+   },
+   "title": {
+    "file": "20-etape-5-audio-22-p32-homme.title.m4a",
+    "bytes": 22352,
+    "seconds": 3.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/20.ETAPE-6-AUDIO-E50.mp3": {
@@ -281,6 +321,11 @@
     "file": "22-etape-5-audio-24-p33-homme.guide.m4a",
     "bytes": 1534805,
     "seconds": 247.8
+   },
+   "title": {
+    "file": "22-etape-5-audio-24-p33-homme.title.m4a",
+    "bytes": 19245,
+    "seconds": 2.8
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-5-AUDIO-25-P34-HOMME.mp3": {
@@ -291,6 +336,11 @@
     "file": "23-etape-5-audio-25-p34-homme.guide.m4a",
     "bytes": 1661089,
     "seconds": 268
+   },
+   "title": {
+    "file": "23-etape-5-audio-25-p34-homme.title.m4a",
+    "bytes": 19469,
+    "seconds": 3.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/23.ETAPE-6-AUDIO-P40-HOMME.mp3": {
@@ -321,6 +371,11 @@
     "file": "3-etape-1-audio-5-p6-homme.guide.m4a",
     "bytes": 538540,
     "seconds": 87.8
+   },
+   "title": {
+    "file": "3-etape-1-audio-5-p6-homme.title.m4a",
+    "bytes": 15998,
+    "seconds": 2.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/3.ETAPE-2-AUDIO-4-P12-HOMME.mp3": {
@@ -356,6 +411,11 @@
     "file": "4-etape-1-audio-6-p7-homme.guide.m4a",
     "bytes": 737413,
     "seconds": 119.8
+   },
+   "title": {
+    "file": "4-etape-1-audio-6-p7-homme.title.m4a",
+    "bytes": 12954,
+    "seconds": 2.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-2-AUDIO-5-P13-HOMME.mp3": {
@@ -366,6 +426,11 @@
     "file": "4-etape-2-audio-5-p13-homme.guide.m4a",
     "bytes": 1407902,
     "seconds": 227.5
+   },
+   "title": {
+    "file": "4-etape-2-audio-5-p13-homme.title.m4a",
+    "bytes": 14976,
+    "seconds": 2.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/4.ETAPE-3-AUDIO-5-E14.mp3": {
@@ -396,6 +461,11 @@
     "file": "5-etape-1-audio-7-p8.guide.m4a",
     "bytes": 461388,
     "seconds": 75.5
+   },
+   "title": {
+    "file": "5-etape-1-audio-7-p8.title.m4a",
+    "bytes": 11651,
+    "seconds": 1.9
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-2-AUDIO-6-P14-HOMME.mp3": {
@@ -406,6 +476,11 @@
     "file": "5-etape-2-audio-6-p14-homme.guide.m4a",
     "bytes": 1185488,
     "seconds": 191.8
+   },
+   "title": {
+    "file": "5-etape-2-audio-6-p14-homme.title.m4a",
+    "bytes": 19192,
+    "seconds": 3.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-3-AUDIO-6-P19-HOMME.mp3": {
@@ -416,6 +491,11 @@
     "file": "5-etape-3-audio-6-p19-homme.guide.m4a",
     "bytes": 2378129,
     "seconds": 382.8
+   },
+   "title": {
+    "file": "5-etape-3-audio-6-p19-homme.title.m4a",
+    "bytes": 15076,
+    "seconds": 2.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/5.ETAPE-4-AUDIO-6-E24.mp3": {
@@ -441,6 +521,11 @@
     "file": "6-etape-1-audio-8-p9-homme.guide.m4a",
     "bytes": 1066135,
     "seconds": 172.5
+   },
+   "title": {
+    "file": "6-etape-1-audio-8-p9-homme.title.m4a",
+    "bytes": 14772,
+    "seconds": 2.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-2-AUDIO-7-P15-HOMME.mp3": {
@@ -451,6 +536,11 @@
     "file": "6-etape-2-audio-7-p15-homme.guide.m4a",
     "bytes": 2275071,
     "seconds": 366.5
+   },
+   "title": {
+    "file": "6-etape-2-audio-7-p15-homme.title.m4a",
+    "bytes": 14889,
+    "seconds": 2.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/6.ETAPE-3-AUDIO-7-E15.mp3": {
@@ -476,6 +566,11 @@
     "file": "6-etape-6-audio-p36-homme.guide.m4a",
     "bytes": 3562858,
     "seconds": 572.3
+   },
+   "title": {
+    "file": "6-etape-6-audio-p36-homme.title.m4a",
+    "bytes": 45821,
+    "seconds": 7.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-1-AUDIO-9-P10-.mp3": {
@@ -486,6 +581,11 @@
     "file": "7-etape-1-audio-9-p10.guide.m4a",
     "bytes": 901546,
     "seconds": 146
+   },
+   "title": {
+    "file": "7-etape-1-audio-9-p10.title.m4a",
+    "bytes": 17716,
+    "seconds": 2.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-2-AUDIO-8-P16-HOMME.mp3": {
@@ -496,6 +596,11 @@
     "file": "7-etape-2-audio-8-p16-homme.guide.m4a",
     "bytes": 1214462,
     "seconds": 196.5
+   },
+   "title": {
+    "file": "7-etape-2-audio-8-p16-homme.title.m4a",
+    "bytes": 17998,
+    "seconds": 2.9
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-3-AUDIO-8-E16.mp3": {
@@ -511,6 +616,11 @@
     "file": "7-etape-4-audio-8-p26-homme.guide.m4a",
     "bytes": 1112034,
     "seconds": 179.8
+   },
+   "title": {
+    "file": "7-etape-4-audio-8-p26-homme.title.m4a",
+    "bytes": 14906,
+    "seconds": 2.4
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/7.ETAPE-5-AUDIO-7-E31.mp3": {
@@ -566,6 +676,11 @@
     "file": "9-etape-4-audio-10-p28-homme.guide.m4a",
     "bytes": 2293881,
     "seconds": 369
+   },
+   "title": {
+    "file": "9-etape-4-audio-10-p28-homme.title.m4a",
+    "bytes": 22431,
+    "seconds": 3.6
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/9.ETAPE-6-AUDIO-P37-HOMME.mp3": {
@@ -576,6 +691,11 @@
     "file": "9-etape-6-audio-p37-homme.guide.m4a",
     "bytes": 2802720,
     "seconds": 451
+   },
+   "title": {
+    "file": "9-etape-6-audio-p37-homme.title.m4a",
+    "bytes": 17763,
+    "seconds": 2.9
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/04/P18-ch3-étape-2-.mp3": {
@@ -596,6 +716,11 @@
     "file": "p5-ch3-etape-1.guide.m4a",
     "bytes": 1261459,
     "seconds": 203.8
+   },
+   "title": {
+    "file": "p5-ch3-etape-1.title.m4a",
+    "bytes": 14779,
+    "seconds": 2.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/05/1.AUDIO-1-E3.mp3": {
@@ -651,6 +776,11 @@
     "file": "15-etape-3-audio-16-p23-homme.guide.m4a",
     "bytes": 2667568,
     "seconds": 429.3
+   },
+   "title": {
+    "file": "15-etape-3-audio-16-p23-homme.title.m4a",
+    "bytes": 19083,
+    "seconds": 2.8
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/05/16.ETAPE-5-AUDIO-18-E34.mp3": {
@@ -816,6 +946,11 @@
     "file": "p42-ch3-etape-7.outro.m4a",
     "bytes": 434430,
     "seconds": 69.5
+   },
+   "title": {
+    "file": "p42-ch3-etape-7.title.m4a",
+    "bytes": 19066,
+    "seconds": 3.1
    }
   },
   "https://www.openmindfulness.net/wp-content/uploads/2019/05/P43-ch3-étape-7.mp3": {
@@ -831,6 +966,11 @@
     "file": "p43-ch3-etape-7.outro.m4a",
     "bytes": 43445,
     "seconds": 6.8
+   },
+   "title": {
+    "file": "p43-ch3-etape-7.title.m4a",
+    "bytes": 17861,
+    "seconds": 2.9
    }
   }
  }

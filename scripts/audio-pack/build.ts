@@ -20,6 +20,8 @@
  * Also produces, for the sitting sessions of the Méditations tab:
  *   - a "guide" clip of every practice used by the program (see guide.ts):
  *     the guided part, without the bells and the silent tail;
+ *   - a "title" clip of the same practices: the announcement of the practice
+ *     that opens its guidance (the light version of the sessions plays only that);
  *   - assets/sounds/: the book's bell and silences of fixed lengths (bundled
  *     with the app, used to pace sessions and the free timer).
  */
@@ -33,7 +35,7 @@ import type { Book } from '../../src/core/book/types.ts';
 import type { AudioManifest } from '../../src/core/audio/manifest-types.ts';
 import { PROGRAM } from '../../src/core/program.ts';
 import { SILENCE_SECONDS } from '../../src/core/audio/sound-lengths.ts';
-import { analyze, guideBounds } from './guide.ts';
+import { analyze, guideBounds, titleBounds } from './guide.ts';
 import { assetName } from './names.ts';
 
 const run = promisify(execFile);
@@ -85,10 +87,10 @@ async function pcm(src: string): Promise<Float32Array> {
 }
 
 /** Part of a practice, short fades so the cuts are inaudible. */
-async function encodeClip(src: string, dest: string, start: number, end: number) {
+async function encodeClip(src: string, dest: string, start: number, end: number, fadeOut = 1.5) {
   const length = end - start;
   await run('ffmpeg', ['-loglevel', 'error', '-y', '-ss', String(start), '-t', length.toFixed(2), '-i', src, '-vn', '-map_metadata', '-1', '-ac', '1',
-    '-af', `afade=t=in:d=0.1,afade=t=out:st=${(length - 1.5).toFixed(2)}:d=1.5`,
+    '-af', `afade=t=in:d=0.1,afade=t=out:st=${(length - fadeOut).toFixed(2)}:d=${fadeOut}`,
     '-c:a', 'aac', '-b:a', BITRATE, '-movflags', '+faststart', `${dest}.part.m4a`]);
   await rename(`${dest}.part.m4a`, dest);
 }
@@ -100,6 +102,15 @@ async function encodeGuide(src: string, guide: string, outro: string | null) {
   if (!bounds) throw new Error(`${src}: no voice found`);
   await encodeClip(src, guide, bounds.start, bounds.end);
   if (outro && bounds.outro) await encodeClip(src, outro, bounds.outro.start, bounds.outro.end);
+}
+
+/** Announcement of a practice (first spoken phrase), see titleBounds. */
+async function encodeTitle(src: string, dest: string) {
+  if (existsSync(dest)) return;
+  const bounds = titleBounds(analyze(await pcm(src), ANALYSIS_RATE));
+  if (!bounds) throw new Error(`${src}: no voice found`);
+  // The margin after the last word is short: a short fade-out keeps the word whole.
+  await encodeClip(src, dest, bounds.start, bounds.end, 0.3);
 }
 
 /** The bell (first seconds of any practice) and silences, bundled in assets/sounds. */
@@ -175,6 +186,8 @@ async function main() {
       await encodeGuide(src, `${OUT_DIR}/${name}.guide.m4a`, withOutro ? `${OUT_DIR}/${name}.outro.m4a` : null);
       manifest.tracks[url].guide = await clip('guide');
       if (withOutro) manifest.tracks[url].outro = await clip('outro');
+      await encodeTitle(src, `${OUT_DIR}/${name}.title.m4a`);
+      manifest.tracks[url].title = await clip('title');
     }
     done++;
     process.stdout.write(`\r${done}/${urls.length} ${name}`.padEnd(70));
@@ -182,10 +195,10 @@ async function main() {
 
   // Stable key order keeps the committed manifest's diff readable.
   manifest.tracks = Object.fromEntries(Object.entries(manifest.tracks).sort(([a], [b]) => a.localeCompare(b)));
-  const files = Object.values(manifest.tracks).flatMap((t) => [t, t.guide, t.outro].filter((f) => f !== undefined));
+  const files = Object.values(manifest.tracks).flatMap((t) => [t, t.guide, t.outro, t.title].filter((f) => f !== undefined));
   manifest.totalBytes = files.reduce((sum, t) => sum + t.bytes, 0);
   await writeFile(MANIFEST, JSON.stringify(manifest, null, 1) + '\n');
-  console.log(`\n✓ ${urls.length} tracks, ${guided.size} guides, ${(manifest.totalBytes / 1e6).toFixed(0)} MB → ${MANIFEST}`);
+  console.log(`\n✓ ${urls.length} tracks, ${guided.size} guides and titles, ${(manifest.totalBytes / 1e6).toFixed(0)} MB → ${MANIFEST}`);
 
   await buildSounds(`${SRC_DIR}/${names.get(bellUrl)}.mp3`);
   console.log(`✓ bell and silences → ${SOUNDS_DIR}`);

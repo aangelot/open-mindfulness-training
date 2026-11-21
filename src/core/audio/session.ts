@@ -34,7 +34,8 @@ const resolveItem: ItemResolver = (item) => {
     case 'track':
       return [{ source: resolveTrackUri(item.url), seconds: trackSeconds(item.url) ?? 0 }];
     case 'guide':
-    case 'outro': {
+    case 'outro':
+    case 'title': {
       const clip = clipOf(item.url, item.kind);
       return clip ? [{ source: clip.uri, seconds: clip.seconds }] : [];
     }

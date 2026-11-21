@@ -3,7 +3,8 @@ import { router } from 'expo-router';
 import { i18n } from '@/core/i18n';
 import { PROGRAM } from '@/core/program';
 
-import { getSittingSession, type SittingSessionDef } from './sitting-sessions';
+import { practiceClips } from './practice-audio';
+import { SITTING_LENGTHS, SITTING_VERSIONS, composeSitting, getSittingSession, type SittingSessionDef } from './sitting-sessions';
 import type { MeditationSession } from './store';
 
 const t = i18n.t.bind(i18n);
@@ -65,6 +66,15 @@ export function thisWeek(sessions: readonly MeditationSession[], now = new Date(
 export function sittingTitle(def: SittingSessionDef): string {
   const name = def.group ? t(`meditations.sitting.groups.${def.group}`) : PROGRAM[def.week - 1].title;
   return `${t('meditations.sitting.step', { n: def.week })} · ${name}`;
+}
+
+/** Minutes of a session, every version and length: "38 min", "28 à 34 min". */
+export function sittingMinutes(def: SittingSessionDef): string {
+  const all = SITTING_VERSIONS.flatMap((version) =>
+    SITTING_LENGTHS.map((length) => Math.round(composeSitting(def, { version, length }, practiceClips).totalSeconds / 60)),
+  );
+  const [min, max] = [Math.min(...all), Math.max(...all)];
+  return min === max ? t('meditations.sitting.minutes', { n: min }) : t('meditations.sitting.minutesRange', { min, max });
 }
 
 /** What a recorded session was, for the history. */

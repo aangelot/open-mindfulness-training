@@ -1,4 +1,4 @@
-import { analyze, guideBounds } from './guide';
+import { analyze, guideBounds, titleBounds } from './guide';
 
 const RATE = 8000;
 
@@ -77,5 +77,24 @@ describe('guide bounds', () => {
     expect(b.outro!.start).toBeLessThan(268);
     expect(b.outro!.end).toBeGreaterThan(287);
     expect(b.outro!.end).toBeLessThan(291);
+  });
+});
+
+describe('title bounds', () => {
+  it('keeps the first spoken phrase, up to the first pause', () => {
+    const pcm = practice([
+      { kind: 'bell', seconds: 5 },
+      { kind: 'zero', seconds: 2 },
+      { kind: 'voice', seconds: 3 }, // "Les sept points de la posture"
+      { kind: 'quiet', seconds: 4 },
+      { kind: 'voice', seconds: 60 },
+      { kind: 'quiet', seconds: 60 },
+      { kind: 'bell', seconds: 6 },
+    ]);
+    const b = titleBounds(analyze(pcm, RATE))!;
+    expect(b.start).toBeGreaterThanOrEqual(6.5);
+    expect(b.start).toBeLessThanOrEqual(7);
+    expect(b.end).toBeGreaterThan(10);
+    expect(b.end).toBeLessThan(11);
   });
 });

@@ -12,12 +12,12 @@ import Storage from 'expo-sqlite/kv-store';
 import { create } from 'zustand';
 
 import { audioManifest } from './manifest';
-import type { ManifestTrack } from './manifest-types';
+import type { ClipKind, ManifestTrack } from './manifest-types';
 
 export { audioManifest, trackSeconds } from './manifest';
-/** Every file of the pack: the book audios, plus the guides and outros of the sitting sessions. */
+/** Every file of the pack: the book audios, plus the guides, outros and titles of the sitting sessions. */
 const tracks: ManifestTrack[] = Object.values(audioManifest.tracks).flatMap((t) =>
-  [t, t.guide, t.outro].filter((f) => f !== undefined),
+  [t, t.guide, t.outro, t.title].filter((f) => f !== undefined),
 );
 export const offlineFileCount = tracks.length;
 
@@ -157,8 +157,8 @@ export function resolveTrackUri(url: string): string {
 
 const fileUri = (f: ManifestTrack) => (isComplete(f) ? localFile(f.file).uri : audioManifest.baseUrl + f.file);
 
-/** Guided part (or spoken conclusion) of a practice, see scripts/audio-pack/guide.ts. */
-export function clipOf(url: string, part: 'guide' | 'outro'): { uri: string; seconds: number } | null {
+/** Guided part, spoken conclusion or title of a practice, see scripts/audio-pack/guide.ts. */
+export function clipOf(url: string, part: ClipKind): { uri: string; seconds: number } | null {
   const clip = audioManifest.tracks[url]?.[part];
   return clip ? { uri: fileUri(clip), seconds: clip.seconds } : null;
 }

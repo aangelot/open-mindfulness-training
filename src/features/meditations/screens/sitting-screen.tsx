@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { BELL_SECONDS } from '@/core/audio/sound-lengths';
 import { book } from '@/core/book/content';
 import { PROGRAM } from '@/core/program';
 import { spacing, useTheme } from '@/core/theme';
@@ -11,16 +12,29 @@ import { RefBadge } from '../components/ref-badge';
 import { formatDuration, openBookSection, sittingTitle } from '../format';
 import { playSitting } from '../play';
 import { practiceClips } from '../practice-audio';
-import { TARGET_MINUTES, composeSitting, getSittingSession, type TargetMinutes } from '../sitting-sessions';
+import { loadSittingVersion, setSittingVersion, useSittingVersion } from '../preferences';
+import {
+  SITTING_LENGTHS,
+  SITTING_VERSIONS,
+  composeSitting,
+  getSittingSession,
+  hasLengths,
+  type ComposedStep,
+  type SittingLength,
+} from '../sitting-sessions';
 
 /** The book's "pratique type" page of a step. */
 const sittingSectionId = (week: number) =>
   book.parts.find((p) => p.step === week)?.sections.find((s) => s.kind === 'pratique-type')?.id;
 
+const minutesOf = (seconds: number) => Math.round(seconds / 60);
+
 export function SittingScreen({ id }: { id: string }) {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const [minutes, setMinutes] = useState<TargetMinutes>(30);
+  const version = useSittingVersion((s) => s.version);
+  const [length, setLength] = useState<SittingLength>('short');
+  useEffect(loadSittingVersion, []);
   const def = getSittingSession(id);
   const back = <BackLink label={t('meditations.title')} fallback="/meditations" />;
   if (!def) {
@@ -31,31 +45,54 @@ export function SittingScreen({ id }: { id: string }) {
     );
   }
 
-  const session = composeSitting(def, minutes, practiceClips);
-  const included = new Set(session.steps.map((s) => s.ref));
-  const omitted = def.steps.filter((s) => !included.has(s.ref)).map((s) => s.ref);
+  const options = { version, length };
+  const session = composeSitting(def, options, practiceClips);
+  const total = minutesOf(session.totalSeconds);
   const sectionId = sittingSectionId(def.week);
 
   return (
     <Screen header={back} title={sittingTitle(def)} subtitle={def.group ? PROGRAM[def.week - 1].title : undefined}>
       <View style={styles.block}>
         <Text variant="label" color="textMuted">
-          {t('meditations.sitting.duration').toUpperCase()}
+          {t('meditations.sitting.version').toUpperCase()}
         </Text>
         <View style={styles.chips}>
-          {TARGET_MINUTES.map((m) => (
-            <Chip key={m} label={t('meditations.sitting.minutes', { n: m })} selected={m === minutes} onPress={() => setMinutes(m)} />
+          {SITTING_VERSIONS.map((v) => (
+            <Chip key={v} label={t(`meditations.sitting.versions.${v}`)} selected={v === version} onPress={() => setSittingVersion(v)} />
           ))}
         </View>
+        <Text variant="small" color="textMuted">
+          {t(`meditations.sitting.versionHints.${version}`)}
+        </Text>
       </View>
-      <Button label={t('meditations.sitting.start', { n: minutes })} icon="play_arrow" iosIcon="play.fill" onPress={() => playSitting(def, minutes)} />
+      {hasLengths(def) ? (
+        <View style={styles.block}>
+          <Text variant="label" color="textMuted">
+            {t('meditations.sitting.duration').toUpperCase()}
+          </Text>
+          <View style={styles.chips}>
+            {SITTING_LENGTHS.map((l) => (
+              <Chip
+                key={l}
+                label={t('meditations.sitting.lengthChip', {
+                  name: t(`meditations.sitting.lengths.${l}`),
+                  n: minutesOf(composeSitting(def, { version, length: l }, practiceClips).totalSeconds),
+                })}
+                selected={l === length}
+                onPress={() => setLength(l)}
+              />
+            ))}
+          </View>
+        </View>
+      ) : null}
+      <Button label={t('meditations.sitting.start', { n: total })} icon="play_arrow" iosIcon="play.fill" onPress={() => playSitting(def, options)} />
 
       <View style={styles.block}>
         <Text variant="subtitle" color="heading">
           {t('meditations.sitting.composition')}
         </Text>
         <Text variant="small" color="textMuted">
-          {t('meditations.sitting.explain')}
+          {t(`meditations.sitting.explain.${version}`)}
         </Text>
       </View>
 
@@ -64,23 +101,7 @@ export function SittingScreen({ id }: { id: string }) {
           <Row title={t('meditations.sitting.introPart')} detail={t('meditations.sitting.silence', { duration: formatDuration(session.introSeconds) })} refName="E6" />
         ) : null}
         {session.steps.map((step) => (
-          <Row
-            key={step.ref}
-            refName={step.ref}
-            title={step.title}
-            detail={
-              step.guided
-                ? [
-                    t('meditations.sitting.voice', { duration: formatDuration(step.guideSeconds) }),
-                    step.silenceSeconds >= 30 ? t('meditations.sitting.silence', { duration: formatDuration(step.silenceSeconds) }) : null,
-                  ]
-                    .filter(Boolean)
-                    .join(' + ')
-                : `${t('meditations.sitting.silence', { duration: formatDuration(step.silenceSeconds) })}. ${
-                    def.steps.find((s) => s.ref === step.ref)?.silent ? t('meditations.sitting.settle') : t('meditations.sitting.noAudio')
-                  }`
-            }
-          />
+          <Row key={step.ref} refName={step.ref} title={step.title} detail={stepDetail(step, def.steps.find((s) => s.ref === step.ref)?.silent)} />
         ))}
         {session.conclusionSeconds > 0 ? (
           <Row title={t('meditations.sitting.conclusionPart')} detail={t('meditations.sitting.silence', { duration: formatDuration(session.conclusionSeconds) })} />
@@ -89,12 +110,7 @@ export function SittingScreen({ id }: { id: string }) {
 
       {def.selfContained ? (
         <Text variant="small" color="textMuted">
-          {t('meditations.sitting.selfContained')}
-        </Text>
-      ) : null}
-      {omitted.length > 0 ? (
-        <Text variant="small" color="textMuted">
-          {t('meditations.sitting.omitted', { count: omitted.length, refs: omitted.join(', ') })}
+          {t(`meditations.sitting.selfContained.${version}`)}
         </Text>
       ) : null}
       {sectionId ? (
@@ -104,6 +120,26 @@ export function SittingScreen({ id }: { id: string }) {
       ) : null}
     </Screen>
   );
+
+  function stepDetail(step: ComposedStep, settle?: boolean): string {
+    const silence = t('meditations.sitting.silence', { duration: formatDuration(step.silenceSeconds) });
+    const parts: string[] = [];
+    if (step.voice === 'guide') {
+      parts.push(t('meditations.sitting.voice', { duration: formatDuration(step.voiceSeconds) }));
+      if (step.silenceSeconds >= 30) parts.push(silence);
+    } else if (step.voice === 'title') {
+      parts.push(t('meditations.sitting.announced'), silence);
+    } else {
+      parts.push(silence);
+    }
+    if (step.outroSeconds > 0) parts.push(t('meditations.sitting.dedication', { duration: formatDuration(step.outroSeconds) }));
+    let detail = parts.join(' + ');
+    if (!step.voice) detail += `. ${settle ? t('meditations.sitting.settle') : t('meditations.sitting.noAudio')}`;
+    // The full guidance is never cut: say when it overruns the book's minutes.
+    const spoken = step.voiceSeconds + step.silenceSeconds + step.outroSeconds;
+    if (spoken - (step.plannedSeconds - BELL_SECONDS) > 30) detail += `. ${t('meditations.sitting.overrun', { n: minutesOf(step.plannedSeconds) })}`;
+    return detail;
+  }
 }
 
 function Row({ refName, title, detail }: { refName?: string; title: string; detail: string }) {

@@ -9,7 +9,7 @@ import { SESSION_CONCLUSION, SESSION_INTRO } from '@/core/program';
 import { isPractice } from './catalog';
 import { openPlayer, sittingTitle } from './format';
 import { practiceClips } from './practice-audio';
-import { composeSitting, sittingPlan, type SittingSessionDef, type TargetMinutes } from './sitting-sessions';
+import { composeSitting, hasLengths, sittingPlan, type SittingOptions, type SittingSessionDef } from './sitting-sessions';
 import { MIN_RECORDED_SECONDS, recordSession } from './store';
 import { timerPlan, type TimerSettings } from './timer';
 
@@ -52,15 +52,20 @@ export function playBookAudio(section: Section & { audioUrl: string }) {
   play(plan, isPractice(section) ? 'guided' : null, section.ref);
 }
 
-export function playSitting(def: SittingSessionDef, minutes: TargetMinutes) {
-  const session = composeSitting(def, minutes, practiceClips);
+/** Recorded as "etape-2:light:long" (older records: "etape-2:30", the minutes). */
+export function playSitting(def: SittingSessionDef, options: SittingOptions) {
+  const session = composeSitting(def, options, practiceClips);
   const plan = sittingPlan(session, practiceClips, {
     title: sittingTitle(def),
-    subtitle: t('meditations.sitting.planSubtitle', { n: minutes }),
+    subtitle: t('meditations.sitting.planSubtitle', {
+      version: t(`meditations.sitting.versions.${options.version}`).toLowerCase(),
+      n: Math.round(session.totalSeconds / 60),
+    }),
     intro: SESSION_INTRO.label,
     conclusion: SESSION_CONCLUSION.label,
   });
-  play(plan, 'sitting_type', `${def.id}:${minutes}`);
+  const ref = [def.id, options.version, ...(hasLengths(def) ? [options.length] : [])].join(':');
+  play(plan, 'sitting_type', ref);
 }
 
 export function playTimer(settings: TimerSettings) {

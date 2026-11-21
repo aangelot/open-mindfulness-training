@@ -26,7 +26,6 @@ export function CarnetHomeScreen() {
   return (
     <Screen title={t('carnet.title')}>
       <Text>{t('carnet.intro')}</Text>
-      <Text color="textMuted">{t('carnet.introCycles')}</Text>
       <FoundationsAdvice />
       <Button label={t('carnet.start')} icon="play_arrow" iosIcon="play.fill" onPress={() => confirmStartCycle(null)} />
       {cycles.length > 0 ? <HistoryLink /> : null}

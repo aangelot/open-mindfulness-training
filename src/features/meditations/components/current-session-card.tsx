@@ -7,12 +7,12 @@ import { Card, Icon, ProgressBar, Text } from '@/ui';
 
 import { formatClock, openPlayer } from '../format';
 
-/** Shortcut back to the player while a session plays (it continues when leaving the player). */
+/** Shortcut back to the player while a session plays (it continues when leaving the player). Hidden once it has ended. */
 export function CurrentSessionCard() {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { plan, status, position, duration } = useSession();
-  if (!plan || status === 'idle') return null;
+  if (!plan || status === 'idle' || status === 'ended') return null;
   const playing = status === 'playing' || status === 'loading';
   return (
     <Card onPress={openPlayer}>
@@ -20,12 +20,12 @@ export function CurrentSessionCard() {
         <Icon name={playing ? 'graphic_eq' : 'pause_circle'} ios={playing ? 'waveform' : 'pause.circle'} color={colors.primary} />
         <View style={styles.grow}>
           <Text variant="label" color="primary">
-            {(status === 'ended' ? t('meditations.currentEnded') : t('meditations.current')).toUpperCase()}
+            {t('meditations.current').toUpperCase()}
           </Text>
           <Text numberOfLines={1}>{plan.title}</Text>
         </View>
         <Text variant="small" color="textMuted">
-          {status === 'ended' ? formatClock(duration) : t('meditations.player.remaining', { time: formatClock(duration - position) })}
+          {t('meditations.player.remaining', { time: formatClock(duration - position) })}
         </Text>
       </View>
       <ProgressBar value={duration ? position / duration : 0} />

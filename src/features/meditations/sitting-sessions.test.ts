@@ -1,16 +1,14 @@
-import { PROGRAM, SESSION_CONCLUSION, SESSION_INTRO, weekSittingSessions } from '@/core/program';
+import { PROGRAM, weekSittingSessions } from '@/core/program';
 
 import { practiceClips } from './practice-audio';
-import { BELL_SECONDS } from '@/core/audio/sound-lengths';
-
 import {
-  SITTING_LENGTHS,
   SITTING_SESSIONS,
   SITTING_VERSIONS,
+  TARGET_MINUTES,
   composeSitting,
-  hasLengths,
   sittingPlan,
   type SittingOptions,
+  type TargetMinutes,
 } from './sitting-sessions';
 
 const labels = { title: 't', subtitle: 's', intro: 'intro', conclusion: 'conclusion' };
@@ -44,52 +42,51 @@ describe('sitting sessions', () => {
     }
   });
 
-  it('offer a short and a long length where the book gives a range or alternatives', () => {
-    expect(SITTING_SESSIONS.filter(hasLengths).map((d) => d.id)).toEqual(['etape-2', 'etape-8']);
+  const full = (minutes: TargetMinutes = 30): SittingOptions => ({ version: 'full', minutes });
+  const light = (minutes: TargetMinutes = 30): SittingOptions => ({ version: 'light', minutes });
+
+  const cases = SITTING_SESSIONS.flatMap((def) =>
+    SITTING_VERSIONS.flatMap((version) => TARGET_MINUTES.map((minutes) => [def.id, version, minutes] as const)),
+  );
+
+  it.each(cases)('%s (%s) in %i min lasts exactly that long, with silent practice time', (id, version, minutes) => {
+    const def = SITTING_SESSIONS.find((s) => s.id === id)!;
+    const session = composeSitting(def, { version, minutes }, practiceClips);
+    expect(Math.abs(session.totalSeconds - minutes * 60)).toBeLessThan(1);
+    // Some silent practice is left (étape 2 in 20 min, the tightest, keeps about a fifth).
+    const silence = session.steps.reduce((sum, s) => sum + s.silenceSeconds, 0);
+    const voice = session.steps.reduce((sum, s) => sum + s.voiceSeconds + s.outroSeconds, 0);
+    expect(silence / (silence + voice)).toBeGreaterThan(0.15);
+    for (const s of session.steps) expect(s.silenceSeconds).toBeGreaterThanOrEqual(0);
   });
 
-  const full = (length: SittingOptions['length'] = 'short'): SittingOptions => ({ version: 'full', length });
-  const light = (length: SittingOptions['length'] = 'short'): SittingOptions => ({ version: 'light', length });
-
-  /** Minutes the book plans for a session, introduction and conclusion included. */
-  const bookMinutes = (id: string, length: SittingOptions['length']) => {
-    const def = SITTING_SESSIONS.find((s) => s.id === id)!;
-    const steps = PROGRAM[def.week - 1].sitting.steps.filter((step) =>
-      def.steps.some((s) => step.refs.includes(s.ref) && (s.only ?? length) === length),
-    );
-    const generic = def.selfContained ? 0 : SESSION_INTRO.minutes + SESSION_CONCLUSION.minutes;
-    return generic + steps.reduce((sum, s) => sum + (typeof s.minutes === 'number' ? s.minutes : length === 'short' ? s.minutes[0] : s.minutes[1]), 0);
-  };
-
-  const cases = SITTING_SESSIONS.flatMap((def) => SITTING_LENGTHS.map((length) => [def.id, length] as const));
-
-  it.each(cases)('%s (%s), light, lasts what the book plans', (id, length) => {
-    const def = SITTING_SESSIONS.find((s) => s.id === id)!;
-    const session = composeSitting(def, light(length), practiceClips);
-    // Plus the closing bell; silences are whole seconds.
-    expect(Math.abs(session.totalSeconds - (bookMinutes(id, length) * 60 + BELL_SECONDS))).toBeLessThan(1);
-    for (const s of session.steps) {
-      expect(s.voice).toBe(s.ref === 'P29' ? null : 'title');
-      expect(s.silenceSeconds).toBeGreaterThan(0);
+  it.each(TARGET_MINUTES)('keep every practice in the light version, in %i min', (minutes) => {
+    for (const def of SITTING_SESSIONS) {
+      const steps = composeSitting(def, light(minutes), practiceClips).steps;
+      const expected = def.steps.filter((s) => (s.only ?? TARGET_MINUTES).includes(minutes)).map((s) => s.ref);
+      expect(steps.map((s) => s.ref)).toEqual(expected);
+      for (const s of steps) expect(s.voice).toBe(s.ref === 'P29' ? null : 'title');
     }
   });
 
-  it.each(cases)('%s (%s), full, gives every step its planned time or its whole guidance', (id, length) => {
-    const def = SITTING_SESSIONS.find((s) => s.id === id)!;
-    const session = composeSitting(def, full(length), practiceClips);
-    expect(session.totalSeconds).toBeGreaterThanOrEqual(bookMinutes(id, length) * 60);
-    for (const s of session.steps) {
-      const lasts = BELL_SECONDS + s.voiceSeconds + s.silenceSeconds + s.outroSeconds;
-      expect(Math.abs(lasts - Math.max(s.plannedSeconds, BELL_SECONDS + s.voiceSeconds + s.outroSeconds))).toBeLessThan(1);
-    }
+  it('share the light version in proportion to the book', () => {
+    // Étape 4: P26 and P28 are planned 10 min each, P19 5 min.
+    const steps = composeSitting(SITTING_SESSIONS.find((s) => s.id === 'etape-4')!, light(40), practiceClips).steps;
+    const time = (ref: string) => steps.find((s) => s.ref === ref)!;
+    const lasts = (ref: string) => time(ref).voiceSeconds + time(ref).silenceSeconds;
+    expect(Math.abs(lasts('P26') - lasts('P28'))).toBeLessThan(2);
+    expect(Math.abs(lasts('P26') / lasts('P19') - 2)).toBeLessThan(0.02);
   });
 
-  it('give week 1 the whole of its practices, and week 8 five points when short, eight when long', () => {
-    const refs = (id: string, options: SittingOptions) =>
-      composeSitting(SITTING_SESSIONS.find((s) => s.id === id)!, options, practiceClips).steps.map((s) => s.ref);
-    expect(refs('etape-1', full())).toEqual(['P6', 'P8', 'P9', 'P5', 'P10', 'P7']);
-    expect(refs('etape-8', full('short'))).toEqual(['P8', 'P9', 'P43']);
-    expect(refs('etape-8', full('long'))).toEqual(['P8', 'P9', 'P42']);
+  it('play the five points in 20 min and the eight points in 30 and 40 min (étape 8)', () => {
+    const def = SITTING_SESSIONS.find((s) => s.id === 'etape-8')!;
+    for (const version of SITTING_VERSIONS) {
+      const refs = (minutes: TargetMinutes) => composeSitting(def, { version, minutes }, practiceClips).steps.map((s) => s.ref);
+      expect(refs(20)).toContain('P43');
+      expect(refs(20)).not.toContain('P42');
+      expect(refs(40)).toContain('P42');
+      expect(refs(40)).not.toContain('P43');
+    }
   });
 
   it('build a playlist matching the composition', () => {
@@ -120,7 +117,7 @@ describe('sitting sessions', () => {
 
   it.each(SITTING_VERSIONS)('put the silent practice before the dedication of P42 (%s)', (version) => {
     const def = SITTING_SESSIONS.find((s) => s.id === 'etape-7')!;
-    const plan = sittingPlan(composeSitting(def, { version, length: 'short' }, practiceClips), practiceClips, labels);
+    const plan = sittingPlan(composeSitting(def, { version, minutes: 30 }, practiceClips), practiceClips, labels);
     expect(plan.parts).toHaveLength(1);
     expect(plan.parts[0].items.map((i) => i.kind)).toEqual(['bell', version === 'full' ? 'guide' : 'title', 'silence', 'outro', 'bell']);
   });

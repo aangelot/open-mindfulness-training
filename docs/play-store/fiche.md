@@ -20,7 +20,7 @@ Tout ce qu’il faut saisir dans la Play Console pour la version 1.0.0. Les text
 > • Recherche dans tout le texte, reprise de la lecture là où vous l’avez laissée, sections lues
 >
 > MÉDITER
-> • La pratique assise type de chaque étape, aux durées du livre, guidée par ses audios ou en version épurée
+> • La pratique assise type de chaque étape, en 20, 30 ou 40 minutes, guidée par les audios du livre ou en version épurée
 > • Un minuteur libre, avec la cloche des pratiques
 > • L’historique de vos séances, et l’ajout des séances faites sans l’application
 > • La lecture continue écran verrouillé

@@ -8,7 +8,7 @@ import { Button, Card, Icon, Screen, Text } from '@/ui';
 
 import { catalogCount } from '../catalog';
 import { CurrentSessionCard } from '../components/current-session-card';
-import { formatDuration, openAddSession, openCatalog, openHistory, openSitting, openTimer, sittingMinutes, sittingTitle, thisWeek } from '../format';
+import { formatDuration, openAddSession, openCatalog, openHistory, openSitting, openTimer, sittingTitle, thisWeek } from '../format';
 import { SITTING_SESSIONS, type SittingSessionDef } from '../sitting-sessions';
 import { useSessions } from '../store';
 
@@ -101,7 +101,7 @@ function SittingCard({ def, current }: { def: SittingSessionDef; current?: boole
         <View style={styles.grow}>
           <Text>{sittingTitle(def)}</Text>
           <Text variant="small" color="textMuted">
-            {current ? `${sittingMinutes(def)} · ${t('meditations.yourWeek.badge')}` : sittingMinutes(def)}
+            {current ? `${t('meditations.sitting.durations')} · ${t('meditations.yourWeek.badge')}` : t('meditations.sitting.durations')}
           </Text>
         </View>
         <Icon name="chevron_right" ios="chevron.right" size={20} color={colors.textMuted} />
